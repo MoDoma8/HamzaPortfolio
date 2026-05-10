@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Portfolio of Hamza Tarek, 16-year-old graphic designer creating cyber, glitch, and fantasy art using PixelLab and PH Touch.">
+    <title>Hamza Tarek | Graphic Designer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        /* LIGHT MODE VARIABLES */
+        body.light {
+            --bg: #f5f7fe;
+            --surface: #ffffff;
+            --surface-alpha: rgba(255, 255, 255, 0.85);
+            --text: #1e1e2f;
+            --text-light: #4a4a6a;
+            --accent: #ff3e6c;
+            --accent-glow: #ff9eb6;
+            --border: #ddddee;
+            --card-bg: #ffffff;
+            --card-border: rgba(0,0,0,0.08);
+            --hero-bg: linear-gradient(145deg, #fefefe 0%, #f0f2fa 100%);
+            --tag-bg: #ffe4ec;
+            --tag-text: #b13e5c;
+            --skill-bg: #e9ecef;
+            --skill-text: #2c3e66;
+        }
+        /* DARK MODE (default) */
+        body {
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --surface-alpha: rgba(20, 20, 30, 0.7);
+            --text: #f0f0f0;
+            --text-light: #aaaac0;
+            --accent: #ff3e6c;
+            --accent-glow: #ff9eb6;
+            --border: #22222c;
+            --card-bg: rgba(20, 20, 30, 0.7);
+            --card-border: rgba(255,255,255,0.05);
+            --hero-bg: linear-gradient(145deg, #111118 0%, #0b0b12 100%);
+            --tag-bg: #ff3e6c20;
+            --tag-text: #ff9eb6;
+            --skill-bg: #1e1e2a;
+            --skill-text: #cdcddf;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--border);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            color: var(--accent);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.08) rotate(4deg);
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        /* Back to Top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 999;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            backdrop-filter: blur(8px);
+            transition: all 0.2s;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .back-to-top:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            background: var(--hero-bg);
+            border-radius: 2.5rem;
+            padding: 2rem;
+            border: 1px solid var(--accent);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .hero:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 40px -12px rgba(255, 62, 108, 0.3);
+        }
+
+        .circle-img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow)40;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .circle-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 6px var(--accent);
+        }
+
+        .intro-text h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text) 30%, var(--accent) 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .tag {
+            display: inline-block;
+            background: var(--tag-bg);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--tag-text);
+            margin-top: 0.5rem;
+            border: 1px solid var(--accent)40;
+        }
+
+        /* Skill tags */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1.2rem;
+        }
+        .skill {
+            background: var(--skill-bg);
+            color: var(--skill-text);
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--accent)30;
+            transition: 0.2s;
+        }
+        .skill:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: var(--surface-alpha);
+            border-radius: 50%;
+            color: var(--accent);
+            font-size: 1.6rem;
+            border: 1px solid var(--accent);
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .social-icon:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px) rotate(8deg);
+            box-shadow: 0 5px 12px var(--accent);
+        }
+
+        /* Filter buttons */
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px var(--accent);
+        }
+        .filter-btn:hover:not(.active) {
+            background: var(--accent)30;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* GALLERY */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .design-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2), box-shadow 0.3s, border-color 0.2s;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.4s forwards;
+        }
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .design-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            border-color: var(--accent);
+            box-shadow: 0 25px 35px -12px rgba(255, 62, 108, 0.3);
+        }
+
+        .img-wrapper {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            background: #1e1e2a;
+        }
+        .design-img {
+            width: 100%;
+            aspect-ratio: 1220 / 686;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease, filter 0.3s;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .design-img.loaded {
+            opacity: 1;
+        }
+        .img-wrapper:hover .design-img {
+            transform: scale(1.08);
+            filter: brightness(1.05) contrast(1.05);
+        }
+
+        .card-info {
+            padding: 1rem 1.2rem 1.2rem;
+            cursor: pointer;
+        }
+        .card-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .card-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+        .click-badge {
+            margin-top: 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--accent-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface-alpha);
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .card-info:hover .click-badge {
+            background: var(--accent);
+            color: white;
+            gap: 10px;
+        }
+
+        /* Modal and Lightbox same as before */
+        .modal, .lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:1100; justify-content:center; align-items:center; }
+        .modal-content { max-width:600px; background:var(--surface); border-radius:2rem; padding:1.8rem; border-left:4px solid var(--accent); color:var(--text); animation:modalPop 0.25s; }
+        .close-modal { margin-top:1.5rem; background:var(--accent); border:none; padding:0.5rem 1.5rem; border-radius:30px; color:white; cursor:pointer; }
+        .lightbox { z-index:1200; background:rgba(0,0,0,0.95); cursor:pointer; }
+        .lightbox img { max-width:90vw; max-height:90vh; border-radius:1rem; }
+        .lightbox-close { position:absolute; top:20px; right:30px; font-size:2rem; color:white; background:none; border:none; cursor:pointer; }
+        @keyframes modalPop { from { transform:scale(0.95); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 700px) {
+            .hero { flex-direction: column; text-align: center; }
+            .social-links, .skills { justify-content: center; }
+            .intro-text h1 { font-size: 2rem; }
+            .gallery { grid-template-columns: 1fr; }
+            .back-to-top { bottom: 80px; right: 15px; padding: 0.4rem 0.8rem; font-size: 1rem; }
+            .theme-toggle { bottom: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="hero">
+        <div class="profile-pic">
+            <img class="circle-img" src="hamzapfp.jpg" alt="Hamza Tarek" onerror="this.src='https://placehold.co/400x400/2a2a3a/white?text=Photo'">
+        </div>
+        <div class="intro-text">
+            <h1>Hamza Tarek</h1>
+            <div class="tag">16 y/o • Graphic Designer</div>
+            <p>Hi, I’m Hamza Tarek, a 16-year-old graphic designer passionate about creating visually impactful and modern designs. Despite working mainly on mobile using PixelLab and Photoshop Touch (PH Touch), I focus on delivering high-quality creative work with strong attention to detail, composition, and visual identity.</p>
+            <div class="skills">
+                <span class="skill">PixelLab</span>
+                <span class="skill">PH Touch</span>
+                <span class="skill">Glitch Art</span>
+                <span class="skill">Typography</span>
+                <span class="skill">Neon Effects</span>
+                <span class="skill">Fantasy Design</span>
+            </div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/hamzatarek_19?igsh=c24yeTVscmc2bzVi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1BSxJ7VjKV/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2 class="section-title">My designs</h2>
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="cyber">Cyber</button>
+            <button class="filter-btn" data-filter="fantasy">Fantasy</button>
+        </div>
+        <div class="gallery" id="designGallery"></div>
+    </div>
+    <footer>
+        <p>© 2026 Hamza Tarek — Design that speaks</p>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/hamzatarek_19?igsh=c24yeTVscmc2bzVi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/1BSxJ7VjKV/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </footer>
+</div>
+
+<button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i> Top</button>
+
+<div id="descModal" class="modal"><div class="modal-content"><h3 id="modalTitle">✨ Design details</h3><p id="modalDesc"></p><button class="close-modal" onclick="closeDescModal()">Close</button></div></div>
+<div id="lightbox" class="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">✕</button><img id="lightboxImg" src=""></div>
+
+<script>
+    const designs = [
+        { id:1, title:"Hatsune Miku • Cyber Vibe", image:"1.jpg", category:"cyber", desc:"Featuring Hatsune Miku in a vibrant cyber-inspired aesthetic, this design combines glitch effects, neon colors, and VHS-style textures to create a bold futuristic atmosphere. The composition focuses on strong visual contrast, energetic typography, and detailed lighting to deliver a dynamic and eye-catching artwork." },
+        { id:2, title:"JAX • Digital Circus Neon Glitch", image:"2.jpg", category:"fantasy", desc:"This design Inspired by The Amazing Digital Circus, this artwork presents a surreal neon-glitch aesthetic centered around the character Jax. The design uses intense purple and pink lighting, distorted VHS textures, and cosmic visual effects to create a chaotic digital atmosphere. The composition emphasizes strong contrast, stylized typography, and experimental effects, giving the piece a futuristic and visually immersive appearance." },
+        { id:3, title:"Rouxls Kaard • Dark Fantasy Neon", image:"3.jpg", category:"fantasy", desc:"This design features Rouxls Kaard in a dark fantasy-inspired composition with glowing neon lighting and layered typography. The artwork combines deep purple and cyan tones with textured effects, abstract patterns, and dramatic contrast to create a mysterious and intense atmosphere. The composition focuses on visual depth, luminous effects, and stylized text placement to achieve a bold and cinematic presentation." },
+        { id:4, title:"Undyne • Fierce & Aggressive", image:"4.jpg", category:"fantasy", desc:"This design Featuring Undyne in a powerful and aggressive visual style, this design combines intense lighting, sharp contrast, and energetic effects to reflect the character’s fierce personality. The composition uses dramatic color balance, dynamic textures, and bold typography to create a high-impact atmosphere inspired by action-focused digital art and dark fantasy aesthetics." },
+        { id:5, title:"Chara / Frisk • Duality", image:"5.jpg", category:"fantasy", desc:"This design presents Chara and Frisk through a dual-sided composition that symbolizes contrast between innocence and darkness. The design combines atmospheric lighting, deep shadows, and emotional color grading to create a dramatic visual balance between the two characters. Layered effects and cinematic composition enhance the tension and storytelling, giving the artwork a mysterious and symbolic aesthetic." }
+    ];
+
+    let currentFilter = "all";
+    let currentCards = [];
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;');
+    }
+
+    function createCard(design) {
+        const card = document.createElement('div');
+        card.className = 'design-card';
+        card.setAttribute('data-category', design.category);
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = 'img-wrapper';
+        const img = document.createElement('img');
+        img.src = design.image;
+        img.alt = design.title;
+        img.className = 'design-img';
+        img.loading = 'lazy';
+        img.onload = () => img.classList.add('loaded');
+        if(img.complete) img.classList.add('loaded');
+        imgWrapper.appendChild(img);
+        imgWrapper.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(design.image); });
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'card-info';
+        let hint = design.category === 'cyber' ? '🎨 Cyber / Glitch' : '🌀 Fantasy / Neon';
+        infoDiv.innerHTML = `<h3>${escapeHtml(design.title)}</h3><p>${hint}</p><div class="click-badge">🔍 Click to read description</div>`;
+        infoDiv.addEventListener('click', (e) => { e.stopPropagation(); openDescModal(design.title, design.desc); });
+        card.appendChild(imgWrapper);
+        card.appendChild(infoDiv);
+        return card;
+    }
+
+    function renderGallery() {
+        const container = document.getElementById('designGallery');
+        container.innerHTML = '';
+        const filtered = currentFilter === 'all' ? designs : designs.filter(d => d.category === currentFilter);
+        filtered.forEach(design => {
+            container.appendChild(createCard(design));
+        });
+        // reapply preload observer
+        setTimeout(() => {
+            document.querySelectorAll('.design-img').forEach(img => {
+                if(img.complete) img.classList.add('loaded');
+                else img.onload = () => img.classList.add('loaded');
+            });
+        }, 50);
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            renderGallery();
+        });
+    });
+
+    // Modal & Lightbox functions
+    const descModal = document.getElementById('descModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    window.openDescModal = (title, desc) => {
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+        descModal.style.display = 'flex';
+    };
+    window.closeDescModal = () => { descModal.style.display = 'none'; };
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    window.openLightbox = (src) => { lightboxImg.src = src; lightbox.style.display = 'flex'; };
+    window.closeLightbox = () => { lightbox.style.display = 'none'; };
+    descModal.addEventListener('click', (e) => { if(e.target === descModal) closeDescModal(); });
+    document.addEventListener('keydown', (e) => { if(e.key==='Escape') { closeDescModal(); closeLightbox(); } });
+
+    // Dark/Light mode
+    const themeToggle = document.getElementById('themeToggle');
+    function setTheme(theme) {
+        if(theme === 'light') { document.body.classList.add('light'); themeToggle.innerHTML = '☀️ Light'; }
+        else { document.body.classList.remove('light'); themeToggle.innerHTML = '🌙 Dark'; }
+        localStorage.setItem('hamzaTheme', theme);
+    }
+    const savedTheme = localStorage.getItem('hamzaTheme');
+    setTheme(savedTheme === 'light' ? 'light' : 'dark');
+    themeToggle.addEventListener('click', () => {
+        const isLight = document.body.classList.contains('light');
+        setTheme(isLight ? 'dark' : 'light');
+    });
+
+    // Back to Top smooth scroll
+    const backBtn = document.getElementById('backToTop');
+    backBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Initial render
+    renderGallery();
+</script>
+</body>
+</html>
