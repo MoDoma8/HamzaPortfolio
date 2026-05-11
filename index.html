@@ -11,11 +11,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
 
-        /* LIGHT MODE VARIABLES */
-        body.light {
+        /* LIGHT MODE (default) */
+        body {
             --bg: #f5f7fe;
             --surface: #ffffff;
             --surface-alpha: rgba(255, 255, 255, 0.85);
@@ -31,9 +30,14 @@
             --tag-text: #b13e5c;
             --skill-bg: #e9ecef;
             --skill-text: #2c3e66;
+            --placeholder: #ddd;
+            background: var(--bg);
+            color: var(--text);
+            transition: background-color 0.3s, color 0.2s;
         }
-        /* DARK MODE (default) */
-        body {
+
+        /* DARK MODE */
+        body.dark {
             --bg: #0a0a0f;
             --surface: #111118;
             --surface-alpha: rgba(20, 20, 30, 0.7);
@@ -49,8 +53,7 @@
             --tag-text: #ff9eb6;
             --skill-bg: #1e1e2a;
             --skill-text: #cdcddf;
-            background: var(--bg);
-            color: var(--text);
+            --placeholder: #2a2a3a;
         }
 
         body {
@@ -81,7 +84,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 999;
+            z-index: 1000;
             background: var(--surface);
             border: 1px solid var(--accent);
             border-radius: 50px;
@@ -100,12 +103,12 @@
             box-shadow: 0 0 12px var(--accent);
         }
 
-        /* Back to Top button */
+        /* Back to Top */
         .back-to-top {
             position: fixed;
             bottom: 90px;
             right: 20px;
-            z-index: 999;
+            z-index: 1000;
             background: var(--surface);
             border: 1px solid var(--accent);
             border-radius: 50px;
@@ -119,6 +122,14 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
         .back-to-top:hover {
             background: var(--accent);
@@ -145,6 +156,17 @@
             box-shadow: 0 25px 40px -12px rgba(255, 62, 108, 0.3);
         }
 
+        /* Floating animation for profile pic */
+        .profile-pic {
+            position: relative;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
         .circle-img {
             width: 160px;
             height: 160px;
@@ -157,6 +179,23 @@
         .circle-img:hover {
             transform: scale(1.05);
             box-shadow: 0 0 0 6px var(--accent);
+        }
+        .online-bubble {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            background-color: #2ecc71;
+            border: 3px solid var(--surface);
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px var(--accent);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.7; }
         }
 
         .intro-text h1 {
@@ -178,8 +217,6 @@
             margin-top: 0.5rem;
             border: 1px solid var(--accent)40;
         }
-
-        /* Skill tags */
         .skills {
             display: flex;
             flex-wrap: wrap;
@@ -200,8 +237,8 @@
             background: var(--accent);
             color: white;
             transform: translateY(-2px);
+            box-shadow: 0 2px 8px var(--accent);
         }
-
         .social-links {
             display: flex;
             gap: 1.2rem;
@@ -227,7 +264,7 @@
             box-shadow: 0 5px 12px var(--accent);
         }
 
-        /* Filter buttons */
+        /* Filter bar */
         .filter-bar {
             display: flex;
             gap: 1rem;
@@ -263,13 +300,12 @@
             display: inline-block;
         }
 
-        /* GALLERY */
+        /* Gallery with stagger animation */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 2rem;
         }
-
         .design-card {
             background: var(--card-bg);
             backdrop-filter: blur(4px);
@@ -280,7 +316,8 @@
             transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2), box-shadow 0.3s, border-color 0.2s;
             opacity: 0;
             transform: translateY(20px);
-            animation: cardAppear 0.4s forwards;
+            animation: cardAppear 0.5s forwards;
+            position: relative;
         }
         @keyframes cardAppear {
             to {
@@ -293,12 +330,27 @@
             border-color: var(--accent);
             box-shadow: 0 25px 35px -12px rgba(255, 62, 108, 0.3);
         }
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent);
+            transform: scale(0);
+            animation: rippleAnim 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
 
         .img-wrapper {
             position: relative;
             cursor: pointer;
             overflow: hidden;
-            background: #1e1e2a;
+            background: var(--placeholder);
         }
         .design-img {
             width: 100%;
@@ -307,16 +359,20 @@
             display: block;
             transition: transform 0.5s ease, filter 0.3s;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.5s;
         }
         .design-img.loaded {
             opacity: 1;
+        }
+        /* Blur-up placeholder effect */
+        .design-img.blur-up {
+            filter: blur(10px);
+            transform: scale(1.02);
         }
         .img-wrapper:hover .design-img {
             transform: scale(1.08);
             filter: brightness(1.05) contrast(1.05);
         }
-
         .card-info {
             padding: 1rem 1.2rem 1.2rem;
             cursor: pointer;
@@ -324,6 +380,10 @@
         .card-info h3 {
             font-size: 1.25rem;
             font-weight: 600;
+            transition: color 0.2s;
+        }
+        .card-info:hover h3 {
+            color: var(--accent);
         }
         .card-info p {
             font-size: 0.85rem;
@@ -349,19 +409,40 @@
             gap: 10px;
         }
 
-        /* Modal and Lightbox same as before */
+        /* Description modal */
         .modal, .lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:1100; justify-content:center; align-items:center; }
         .modal-content { max-width:600px; background:var(--surface); border-radius:2rem; padding:1.8rem; border-left:4px solid var(--accent); color:var(--text); animation:modalPop 0.25s; }
-        .close-modal { margin-top:1.5rem; background:var(--accent); border:none; padding:0.5rem 1.5rem; border-radius:30px; color:white; cursor:pointer; }
-        .lightbox { z-index:1200; background:rgba(0,0,0,0.95); cursor:pointer; }
-        .lightbox img { max-width:90vw; max-height:90vh; border-radius:1rem; }
-        .lightbox-close { position:absolute; top:20px; right:30px; font-size:2rem; color:white; background:none; border:none; cursor:pointer; }
-        @keyframes modalPop { from { transform:scale(0.95); opacity:0; } to { transform:scale(1); opacity:1; } }
+        .close-modal { margin-top:1.5rem; background:var(--accent); border:none; padding:0.5rem 1.5rem; border-radius:30px; color:white; cursor:pointer; transition:0.2s; }
+        .close-modal:hover { transform:scale(1.02); background:#ff6b8f; }
+
+        /* Lightbox with arrows and counter */
+        .lightbox { z-index:1200; background:rgba(0,0,0,0.95); cursor:default; }
+        .lightbox-content { position: relative; display: flex; align-items: center; justify-content: center; width:100%; height:100%; }
+        .lightbox img { max-width:90vw; max-height:85vh; border-radius:1rem; box-shadow:0 0 30px black; transition:transform 0.2s; cursor:zoom-out; }
+        .lightbox img:hover { transform:scale(1.02); }
+        .lightbox-close { position:absolute; top:20px; right:30px; font-size:2rem; color:white; background:none; border:none; cursor:pointer; transition:0.2s; z-index:1201; }
+        .lightbox-close:hover { transform:rotate(90deg); color:var(--accent); }
+        .lightbox-prev, .lightbox-next { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); color:white; border:none; font-size:2rem; padding:0.8rem 1rem; cursor:pointer; border-radius:50%; transition:0.2s; z-index:1201; }
+        .lightbox-prev { left:20px; }
+        .lightbox-next { right:20px; }
+        .lightbox-prev:hover, .lightbox-next:hover { background:var(--accent); transform:translateY(-50%) scale(1.1); }
+        .lightbox-counter { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.7); color:white; padding:0.3rem 1rem; border-radius:30px; font-size:0.9rem; font-weight:500; z-index:1201; }
+
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         footer {
             margin-top: 4rem;
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.5rem 0 0.5rem;
             border-top: 1px solid var(--border);
             color: var(--text-light);
         }
@@ -371,28 +452,50 @@
             gap: 1.2rem;
             margin-top: 1rem;
         }
+        .made-by {
+            text-align: center;
+            font-size: 0.75rem;
+            margin-top: 1.5rem;
+            padding-bottom: 1rem;
+            color: var(--text-light);
+        }
+        .made-by a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .made-by a:hover {
+            text-decoration: underline;
+            color: var(--accent-glow);
+        }
+
+        @keyframes modalPop { from { transform:scale(0.95); opacity:0; } to { transform:scale(1); opacity:1; } }
 
         @media (max-width: 700px) {
             .hero { flex-direction: column; text-align: center; }
             .social-links, .skills { justify-content: center; }
             .intro-text h1 { font-size: 2rem; }
             .gallery { grid-template-columns: 1fr; }
-            .back-to-top { bottom: 80px; right: 15px; padding: 0.4rem 0.8rem; font-size: 1rem; }
+            .back-to-top { bottom: 80px; right: 15px; padding: 0.4rem 0.8rem; font-size:1rem; }
             .theme-toggle { bottom: 15px; right: 15px; }
+            .online-bubble { width:18px; height:18px; bottom:5px; right:5px; }
+            .lightbox-prev, .lightbox-next { font-size:1.5rem; padding:0.5rem 0.7rem; }
+            .lightbox-close { top:10px; right:15px; font-size:1.5rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="hero">
+    <div class="hero scroll-reveal">
         <div class="profile-pic">
             <img class="circle-img" src="hamzapfp.jpg" alt="Hamza Tarek" onerror="this.src='https://placehold.co/400x400/2a2a3a/white?text=Photo'">
+            <div class="online-bubble"></div>
         </div>
         <div class="intro-text">
-            <h1>Hamza Tarek</h1>
+            <h1 id="typedName">Hamza Tarek</h1>
             <div class="tag">16 y/o • Graphic Designer</div>
-            <p>Hi, I’m Hamza Tarek, a 16-year-old graphic designer passionate about creating visually impactful and modern designs. Despite working mainly on mobile using PixelLab and Photoshop Touch (PH Touch), I focus on delivering high-quality creative work with strong attention to detail, composition, and visual identity.</p>
+            <p id="typedIntro"></p>
             <div class="skills">
                 <span class="skill">PixelLab</span>
                 <span class="skill">PH Touch</span>
@@ -409,30 +512,43 @@
     </div>
 
     <div>
-        <h2 class="section-title">My designs</h2>
-        <div class="filter-bar">
+        <h2 class="section-title scroll-reveal">My designs</h2>
+        <div class="filter-bar scroll-reveal">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="cyber">Cyber</button>
             <button class="filter-btn" data-filter="fantasy">Fantasy</button>
         </div>
         <div class="gallery" id="designGallery"></div>
     </div>
-    <footer>
+    <footer class="scroll-reveal">
         <p>© 2026 Hamza Tarek — Design that speaks</p>
         <div class="footer-social">
             <a href="https://www.instagram.com/hamzatarek_19?igsh=c24yeTVscmc2bzVi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
             <a href="https://www.facebook.com/share/1BSxJ7VjKV/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
         </div>
     </footer>
+    <div class="made-by">
+        Made by <a href="https://www.instagram.com/mnx_io1?igsh=MW81Znlqc2RldGd5bQ==" target="_blank" rel="noopener noreferrer">Doma</a>
+    </div>
 </div>
 
-<button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+<button class="theme-toggle" id="themeToggle">☀️ Light</button>
 <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i> Top</button>
 
 <div id="descModal" class="modal"><div class="modal-content"><h3 id="modalTitle">✨ Design details</h3><p id="modalDesc"></p><button class="close-modal" onclick="closeDescModal()">Close</button></div></div>
-<div id="lightbox" class="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">✕</button><img id="lightboxImg" src=""></div>
+
+<div id="lightbox" class="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+    <div class="lightbox-content">
+        <img id="lightboxImg" src="">
+    </div>
+    <div class="lightbox-counter" id="lightboxCounter">1 / 5</div>
+</div>
 
 <script>
+    // ----- DESIGN DATA -----
     const designs = [
         { id:1, title:"Hatsune Miku • Cyber Vibe", image:"1.jpg", category:"cyber", desc:"Featuring Hatsune Miku in a vibrant cyber-inspired aesthetic, this design combines glitch effects, neon colors, and VHS-style textures to create a bold futuristic atmosphere. The composition focuses on strong visual contrast, energetic typography, and detailed lighting to deliver a dynamic and eye-catching artwork." },
         { id:2, title:"JAX • Digital Circus Neon Glitch", image:"2.jpg", category:"fantasy", desc:"This design Inspired by The Amazing Digital Circus, this artwork presents a surreal neon-glitch aesthetic centered around the character Jax. The design uses intense purple and pink lighting, distorted VHS textures, and cosmic visual effects to create a chaotic digital atmosphere. The composition emphasizes strong contrast, stylized typography, and experimental effects, giving the piece a futuristic and visually immersive appearance." },
@@ -442,32 +558,77 @@
     ];
 
     let currentFilter = "all";
-    let currentCards = [];
+    let currentLightboxIndex = 0;
+    let filteredDesigns = [];
 
+    // Helper functions
     function escapeHtml(str) {
         return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;');
     }
 
-    function createCard(design) {
+    // Ripple effect
+    function addRipple(e, element) {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.width = '10px';
+        ripple.style.height = '10px';
+        ripple.style.backgroundColor = 'var(--accent)';
+        ripple.style.borderRadius = '50%';
+        ripple.style.pointerEvents = 'none';
+        element.style.position = 'relative';
+        element.style.overflow = 'hidden';
+        element.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+    }
+
+    // Create card with blur-up placeholder
+    function createCard(design, index) {
         const card = document.createElement('div');
         card.className = 'design-card';
         card.setAttribute('data-category', design.category);
+        card.style.animationDelay = (index * 0.05) + 's';
+        
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'img-wrapper';
         const img = document.createElement('img');
         img.src = design.image;
         img.alt = design.title;
-        img.className = 'design-img';
+        img.className = 'design-img blur-up';
         img.loading = 'lazy';
-        img.onload = () => img.classList.add('loaded');
-        if(img.complete) img.classList.add('loaded');
+        
+        const highResImg = new Image();
+        highResImg.src = design.image;
+        highResImg.onload = () => {
+            img.classList.remove('blur-up');
+            img.classList.add('loaded');
+        };
+        if(img.complete) {
+            img.classList.remove('blur-up');
+            img.classList.add('loaded');
+        }
+        
         imgWrapper.appendChild(img);
-        imgWrapper.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(design.image); });
+        imgWrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openLightboxByDesign(design);
+        });
+        
         const infoDiv = document.createElement('div');
         infoDiv.className = 'card-info';
         let hint = design.category === 'cyber' ? '🎨 Cyber / Glitch' : '🌀 Fantasy / Neon';
         infoDiv.innerHTML = `<h3>${escapeHtml(design.title)}</h3><p>${hint}</p><div class="click-badge">🔍 Click to read description</div>`;
-        infoDiv.addEventListener('click', (e) => { e.stopPropagation(); openDescModal(design.title, design.desc); });
+        infoDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openDescModal(design.title, design.desc);
+            addRipple(e, card);
+        });
+        
         card.appendChild(imgWrapper);
         card.appendChild(infoDiv);
         return card;
@@ -476,30 +637,33 @@
     function renderGallery() {
         const container = document.getElementById('designGallery');
         container.innerHTML = '';
-        const filtered = currentFilter === 'all' ? designs : designs.filter(d => d.category === currentFilter);
-        filtered.forEach(design => {
-            container.appendChild(createCard(design));
+        filteredDesigns = currentFilter === 'all' ? designs : designs.filter(d => d.category === currentFilter);
+        filteredDesigns.forEach((design, idx) => {
+            container.appendChild(createCard(design, idx));
         });
-        // reapply preload observer
         setTimeout(() => {
             document.querySelectorAll('.design-img').forEach(img => {
-                if(img.complete) img.classList.add('loaded');
-                else img.onload = () => img.classList.add('loaded');
+                if(img.complete && !img.classList.contains('loaded')) img.classList.add('loaded');
             });
         }, 50);
     }
 
-    // Filter buttons
+    // Filter with transition effect
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentFilter = btn.dataset.filter;
-            renderGallery();
+            const gallery = document.getElementById('designGallery');
+            gallery.style.opacity = '0';
+            setTimeout(() => {
+                renderGallery();
+                gallery.style.opacity = '1';
+            }, 200);
         });
     });
 
-    // Modal & Lightbox functions
+    // Description modal
     const descModal = document.getElementById('descModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDesc = document.getElementById('modalDesc');
@@ -509,32 +673,119 @@
         descModal.style.display = 'flex';
     };
     window.closeDescModal = () => { descModal.style.display = 'none'; };
+
+    // Lightbox with counter & arrows
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
-    window.openLightbox = (src) => { lightboxImg.src = src; lightbox.style.display = 'flex'; };
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    
+    function updateLightbox() {
+        if (filteredDesigns.length === 0) return;
+        const design = filteredDesigns[currentLightboxIndex];
+        lightboxImg.src = design.image;
+        lightboxCounter.textContent = `${currentLightboxIndex+1} / ${filteredDesigns.length}`;
+    }
+    function openLightboxByDesign(design) {
+        const index = filteredDesigns.findIndex(d => d.id === design.id);
+        if (index !== -1) {
+            currentLightboxIndex = index;
+            updateLightbox();
+            lightbox.style.display = 'flex';
+        }
+    }
+    window.openLightbox = (src) => {
+        const design = filteredDesigns.find(d => d.image === src);
+        if(design) openLightboxByDesign(design);
+    };
     window.closeLightbox = () => { lightbox.style.display = 'none'; };
+    lightboxPrev.addEventListener('click', () => {
+        if (filteredDesigns.length === 0) return;
+        currentLightboxIndex = (currentLightboxIndex - 1 + filteredDesigns.length) % filteredDesigns.length;
+        updateLightbox();
+    });
+    lightboxNext.addEventListener('click', () => {
+        if (filteredDesigns.length === 0) return;
+        currentLightboxIndex = (currentLightboxIndex + 1) % filteredDesigns.length;
+        updateLightbox();
+    });
+    // Swipe support for mobile
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    lightbox.addEventListener('touchend', (e) => {
+        if (!lightbox.style.display === 'flex') return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = endX - touchStartX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) lightboxPrev.click();
+            else lightboxNext.click();
+        }
+    });
+    // Keyboard arrows for lightbox
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') lightboxPrev.click();
+            else if (e.key === 'ArrowRight') lightboxNext.click();
+            else if (e.key === 'Escape') closeLightbox();
+        } else if (e.key === 'Escape') {
+            closeDescModal();
+        }
+    });
     descModal.addEventListener('click', (e) => { if(e.target === descModal) closeDescModal(); });
-    document.addEventListener('keydown', (e) => { if(e.key==='Escape') { closeDescModal(); closeLightbox(); } });
+    lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
 
-    // Dark/Light mode
+    // Typing effect
+    const typedIntroEl = document.getElementById('typedIntro');
+    const fullIntro = "Hi, I’m Hamza Tarek, a 16-year-old graphic designer passionate about creating visually impactful and modern designs. Despite working mainly on mobile using PixelLab and Photoshop Touch (PH Touch), I focus on delivering high-quality creative work with strong attention to detail, composition, and visual identity.";
+    let i = 0;
+    function typeWriter() {
+        if (i < fullIntro.length) {
+            typedIntroEl.innerHTML += fullIntro.charAt(i);
+            i++;
+            setTimeout(typeWriter, 20);
+        }
+    }
+    typeWriter();
+
+    // Dark/Light mode: light default
     const themeToggle = document.getElementById('themeToggle');
     function setTheme(theme) {
-        if(theme === 'light') { document.body.classList.add('light'); themeToggle.innerHTML = '☀️ Light'; }
-        else { document.body.classList.remove('light'); themeToggle.innerHTML = '🌙 Dark'; }
+        if (theme === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.innerHTML = '🌙 Dark';
+        } else {
+            document.body.classList.remove('dark');
+            themeToggle.innerHTML = '☀️ Light';
+        }
         localStorage.setItem('hamzaTheme', theme);
     }
     const savedTheme = localStorage.getItem('hamzaTheme');
-    setTheme(savedTheme === 'light' ? 'light' : 'dark');
+    setTheme(savedTheme === 'dark' ? 'dark' : 'light');
     themeToggle.addEventListener('click', () => {
-        const isLight = document.body.classList.contains('light');
-        setTheme(isLight ? 'dark' : 'light');
+        const isDark = document.body.classList.contains('dark');
+        setTheme(isDark ? 'light' : 'dark');
     });
 
-    // Back to Top smooth scroll
+    // Back to Top on scroll
     const backBtn = document.getElementById('backToTop');
-    backBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) backBtn.classList.add('show');
+        else backBtn.classList.remove('show');
     });
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Scroll reveal observer
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    revealElements.forEach(el => observer.observe(el));
 
     // Initial render
     renderGallery();
