@@ -62,6 +62,23 @@
             scroll-behavior: smooth;
         }
 
+        /* Arabic RTL support */
+        body.arabic {
+            direction: rtl;
+            font-family: 'Cairo', 'Poppins', 'Segoe UI', system-ui, sans-serif;
+        }
+        body.arabic .intro-text {
+            text-align: right;
+        }
+        body.arabic .skills, body.arabic .social-links, body.arabic .filter-bar {
+            justify-content: flex-start;
+        }
+        @media (max-width: 700px) {
+            body.arabic .skills, body.arabic .social-links, body.arabic .filter-bar {
+                justify-content: center;
+            }
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -79,24 +96,30 @@
             padding: 2rem 1.5rem;
         }
 
-        /* Theme toggle */
-        .theme-toggle {
+        /* Theme and Language toggles */
+        .toggle-group {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        .lang-toggle, .theme-toggle {
             background: var(--surface);
             border: 1px solid var(--accent);
             border-radius: 50px;
             padding: 0.6rem 1rem;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             backdrop-filter: blur(8px);
             transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             color: var(--accent);
         }
-        .theme-toggle:hover {
+        .lang-toggle:hover, .theme-toggle:hover {
             transform: scale(1.08) rotate(4deg);
             background: var(--accent);
             color: white;
@@ -106,7 +129,7 @@
         /* Back to Top */
         .back-to-top {
             position: fixed;
-            bottom: 90px;
+            bottom: 120px;
             right: 20px;
             z-index: 1000;
             background: var(--surface);
@@ -156,7 +179,6 @@
             box-shadow: 0 25px 40px -12px rgba(255, 62, 108, 0.3);
         }
 
-        /* Floating animation for profile pic */
         .profile-pic {
             position: relative;
             display: inline-block;
@@ -264,7 +286,6 @@
             box-shadow: 0 5px 12px var(--accent);
         }
 
-        /* Filter bar */
         .filter-bar {
             display: flex;
             gap: 1rem;
@@ -300,7 +321,6 @@
             display: inline-block;
         }
 
-        /* Gallery with stagger animation */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -330,7 +350,6 @@
             border-color: var(--accent);
             box-shadow: 0 25px 35px -12px rgba(255, 62, 108, 0.3);
         }
-        /* Ripple effect */
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -364,7 +383,6 @@
         .design-img.loaded {
             opacity: 1;
         }
-        /* Blur-up placeholder effect */
         .design-img.blur-up {
             filter: blur(10px);
             transform: scale(1.02);
@@ -409,13 +427,11 @@
             gap: 10px;
         }
 
-        /* Description modal */
         .modal, .lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:1100; justify-content:center; align-items:center; }
         .modal-content { max-width:600px; background:var(--surface); border-radius:2rem; padding:1.8rem; border-left:4px solid var(--accent); color:var(--text); animation:modalPop 0.25s; }
         .close-modal { margin-top:1.5rem; background:var(--accent); border:none; padding:0.5rem 1.5rem; border-radius:30px; color:white; cursor:pointer; transition:0.2s; }
         .close-modal:hover { transform:scale(1.02); background:#ff6b8f; }
 
-        /* Lightbox with arrows and counter */
         .lightbox { z-index:1200; background:rgba(0,0,0,0.95); cursor:default; }
         .lightbox-content { position: relative; display: flex; align-items: center; justify-content: center; width:100%; height:100%; }
         .lightbox img { max-width:90vw; max-height:85vh; border-radius:1rem; box-shadow:0 0 30px black; transition:transform 0.2s; cursor:zoom-out; }
@@ -428,7 +444,6 @@
         .lightbox-prev:hover, .lightbox-next:hover { background:var(--accent); transform:translateY(-50%) scale(1.1); }
         .lightbox-counter { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.7); color:white; padding:0.3rem 1rem; border-radius:30px; font-size:0.9rem; font-weight:500; z-index:1201; }
 
-        /* Scroll reveal */
         .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -473,11 +488,12 @@
 
         @media (max-width: 700px) {
             .hero { flex-direction: column; text-align: center; }
+            body.arabic .intro-text { text-align: center; }
             .social-links, .skills { justify-content: center; }
             .intro-text h1 { font-size: 2rem; }
             .gallery { grid-template-columns: 1fr; }
-            .back-to-top { bottom: 80px; right: 15px; padding: 0.4rem 0.8rem; font-size:1rem; }
-            .theme-toggle { bottom: 15px; right: 15px; }
+            .back-to-top { bottom: 140px; right: 15px; padding: 0.4rem 0.8rem; font-size:1rem; }
+            .toggle-group { bottom: 15px; right: 15px; }
             .online-bubble { width:18px; height:18px; bottom:5px; right:5px; }
             .lightbox-prev, .lightbox-next { font-size:1.5rem; padding:0.5rem 0.7rem; }
             .lightbox-close { top:10px; right:15px; font-size:1.5rem; }
@@ -493,16 +509,16 @@
             <div class="online-bubble"></div>
         </div>
         <div class="intro-text">
-            <h1 id="typedName">Hamza Tarek</h1>
-            <div class="tag">16 y/o • Graphic Designer</div>
+            <h1 id="nameText">Hamza Tarek</h1>
+            <div class="tag" id="tagText">16 y/o • Graphic Designer</div>
             <p id="typedIntro"></p>
-            <div class="skills">
-                <span class="skill">PixelLab</span>
-                <span class="skill">PH Touch</span>
-                <span class="skill">Glitch Art</span>
-                <span class="skill">Typography</span>
-                <span class="skill">Neon Effects</span>
-                <span class="skill">Fantasy Design</span>
+            <div class="skills" id="skillsContainer">
+                <span class="skill" data-skill-en="PixelLab" data-skill-ar="بيكسل لاب">PixelLab</span>
+                <span class="skill" data-skill-en="PH Touch" data-skill-ar="فوتوشوب تاتش">PH Touch</span>
+                <span class="skill" data-skill-en="Glitch Art" data-skill-ar="فن الجليتش">Glitch Art</span>
+                <span class="skill" data-skill-en="Typography" data-skill-ar="طباعة">Typography</span>
+                <span class="skill" data-skill-en="Neon Effects" data-skill-ar="تأثيرات نيون">Neon Effects</span>
+                <span class="skill" data-skill-en="Fantasy Design" data-skill-ar="تصميم خيالي">Fantasy Design</span>
             </div>
             <div class="social-links">
                 <a href="https://www.instagram.com/hamzatarek_19?igsh=c24yeTVscmc2bzVi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
@@ -512,30 +528,33 @@
     </div>
 
     <div>
-        <h2 class="section-title scroll-reveal">My designs</h2>
-        <div class="filter-bar scroll-reveal">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="cyber">Cyber</button>
-            <button class="filter-btn" data-filter="fantasy">Fantasy</button>
+        <h2 class="section-title scroll-reveal" id="galleryTitle">My designs</h2>
+        <div class="filter-bar scroll-reveal" id="filterBar">
+            <button class="filter-btn active" data-filter="all" data-en="All" data-ar="الكل">All</button>
+            <button class="filter-btn" data-filter="cyber" data-en="Cyber" data-ar="سايبر">Cyber</button>
+            <button class="filter-btn" data-filter="fantasy" data-en="Fantasy" data-ar="خيال">Fantasy</button>
         </div>
         <div class="gallery" id="designGallery"></div>
     </div>
     <footer class="scroll-reveal">
-        <p>© 2026 Hamza Tarek — Design that speaks</p>
+        <p id="footerText">© 2026 Hamza Tarek — Design that speaks</p>
         <div class="footer-social">
             <a href="https://www.instagram.com/hamzatarek_19?igsh=c24yeTVscmc2bzVi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
             <a href="https://www.facebook.com/share/1BSxJ7VjKV/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
         </div>
     </footer>
-    <div class="made-by">
+    <div class="made-by" id="madeByText">
         Made by <a href="https://www.instagram.com/mnx_io1?igsh=MW81Znlqc2RldGd5bQ==" target="_blank" rel="noopener noreferrer">Doma</a>
     </div>
 </div>
 
-<button class="theme-toggle" id="themeToggle">☀️ Light</button>
+<div class="toggle-group">
+    <button class="lang-toggle" id="langToggle">🇸🇦 العربية</button>
+    <button class="theme-toggle" id="themeToggle">☀️ Light</button>
+</div>
 <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i> Top</button>
 
-<div id="descModal" class="modal"><div class="modal-content"><h3 id="modalTitle">✨ Design details</h3><p id="modalDesc"></p><button class="close-modal" onclick="closeDescModal()">Close</button></div></div>
+<div id="descModal" class="modal"><div class="modal-content"><h3 id="modalTitle">✨ Design details</h3><p id="modalDesc"></p><button class="close-modal" id="closeModalBtn">Close</button></div></div>
 
 <div id="lightbox" class="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">✕</button>
@@ -548,25 +567,37 @@
 </div>
 
 <script>
-    // ----- DESIGN DATA -----
-    const designs = [
-        { id:1, title:"Hatsune Miku • Cyber Vibe", image:"1.jpg", category:"cyber", desc:"Featuring Hatsune Miku in a vibrant cyber-inspired aesthetic, this design combines glitch effects, neon colors, and VHS-style textures to create a bold futuristic atmosphere. The composition focuses on strong visual contrast, energetic typography, and detailed lighting to deliver a dynamic and eye-catching artwork." },
-        { id:2, title:"JAX • Digital Circus Neon Glitch", image:"2.jpg", category:"fantasy", desc:"This design Inspired by The Amazing Digital Circus, this artwork presents a surreal neon-glitch aesthetic centered around the character Jax. The design uses intense purple and pink lighting, distorted VHS textures, and cosmic visual effects to create a chaotic digital atmosphere. The composition emphasizes strong contrast, stylized typography, and experimental effects, giving the piece a futuristic and visually immersive appearance." },
-        { id:3, title:"Rouxls Kaard • Dark Fantasy Neon", image:"3.jpg", category:"fantasy", desc:"This design features Rouxls Kaard in a dark fantasy-inspired composition with glowing neon lighting and layered typography. The artwork combines deep purple and cyan tones with textured effects, abstract patterns, and dramatic contrast to create a mysterious and intense atmosphere. The composition focuses on visual depth, luminous effects, and stylized text placement to achieve a bold and cinematic presentation." },
-        { id:4, title:"Undyne • Fierce & Aggressive", image:"4.jpg", category:"fantasy", desc:"This design Featuring Undyne in a powerful and aggressive visual style, this design combines intense lighting, sharp contrast, and energetic effects to reflect the character’s fierce personality. The composition uses dramatic color balance, dynamic textures, and bold typography to create a high-impact atmosphere inspired by action-focused digital art and dark fantasy aesthetics." },
-        { id:5, title:"Chara / Frisk • Duality", image:"5.jpg", category:"fantasy", desc:"This design presents Chara and Frisk through a dual-sided composition that symbolizes contrast between innocence and darkness. The design combines atmospheric lighting, deep shadows, and emotional color grading to create a dramatic visual balance between the two characters. Layered effects and cinematic composition enhance the tension and storytelling, giving the artwork a mysterious and symbolic aesthetic." }
+    // ----- DESIGN DATA (English + Arabic) -----
+    const designsData = [
+        { id:1, category:"cyber", image:"1.jpg",
+          en: { title:"Hatsune Miku • Cyber Vibe", desc:"Featuring Hatsune Miku in a vibrant cyber-inspired aesthetic, this design combines glitch effects, neon colors, and VHS-style textures to create a bold futuristic atmosphere. The composition focuses on strong visual contrast, energetic typography, and detailed lighting to deliver a dynamic and eye-catching artwork." },
+          ar: { title:"هاتسوني ميكو • إحساس سايبر", desc:"يتميز هذا التصميم بهاتسوني ميكو في جمالية مستوحاة من السايبر، حيث يجمع بين تأثيرات الجليتش والألوان النيون وتكسيرات فيديو قديمة لخلق أجواء مستقبلية جريئة. يركز التكوين على التباين البصري القوي والطباعة النشطة والإضاءة المفصلة لتقديم عمل فني ديناميكي وجذاب." } },
+        { id:2, category:"fantasy", image:"2.jpg",
+          en: { title:"JAX • Digital Circus Neon Glitch", desc:"This design Inspired by The Amazing Digital Circus, this artwork presents a surreal neon-glitch aesthetic centered around the character Jax. The design uses intense purple and pink lighting, distorted VHS textures, and cosmic visual effects to create a chaotic digital atmosphere." },
+          ar: { title:"جاكس • سيرك رقمي نيون جليتش", desc:"هذا التصميم مستوحى من \"السيرك الرقمي المذهل\"، يقدم جمالية سريالية من النيون والجليتش تتمحور حول شخصية جاكس. يستخدم التصميم إضاءات أرجوانية ووردية كثيفة وتكسيرات فيديو وتأثيرات كونية لخلق جو رقمي فوضوي." } },
+        { id:3, category:"fantasy", image:"3.jpg",
+          en: { title:"Rouxls Kaard • Dark Fantasy Neon", desc:"This design features Rouxls Kaard in a dark fantasy-inspired composition with glowing neon lighting and layered typography. The artwork combines deep purple and cyan tones with textured effects, abstract patterns, and dramatic contrast to create a mysterious and intense atmosphere." },
+          ar: { title:"روكس كارد • فانتازيا مظلمة نيون", desc:"يقدم هذا التصميم روكس كارد في تكوين مستوحى من الفانتازيا المظلمة مع إضاءة نيون متوهجة وطباعة متعددة الطبقات. يجمع العمل بين درجات الأرجواني العميق والسيان مع تأثيرات محكمية وأنماط مجردة وتباين دراماتيكي." } },
+        { id:4, category:"fantasy", image:"4.jpg",
+          en: { title:"Undyne • Fierce & Aggressive", desc:"This design Featuring Undyne in a powerful and aggressive visual style, this design combines intense lighting, sharp contrast, and energetic effects to reflect the character’s fierce personality." },
+          ar: { title:"أنداين • شرسة وقوية", desc:"يتميز هذا التصميم بأنداين في أسلوب بصري قوي وعدائي، يجمع بين الإضاءة الشديدة والتباين الحاد والتأثيرات النشطة ليعكس شخصية الشخصية الشرسة." } },
+        { id:5, category:"fantasy", image:"5.jpg",
+          en: { title:"Chara / Frisk • Duality", desc:"This design presents Chara and Frisk through a dual-sided composition that symbolizes contrast between innocence and darkness. The design combines atmospheric lighting, deep shadows, and emotional color grading to create a dramatic visual balance between the two characters." },
+          ar: { title:"شارا / فريسك • الازدواجية", desc:"يقدم هذا التصميم شارا وفريسك من خلال تكوين ثنائي الجانب يرمز إلى التباين بين البراءة والظلام. يجمع التصميم بين الإضاءة الجوية والظلال العميقة وتدرجات الألوان العاطفية." } }
     ];
 
     let currentFilter = "all";
     let currentLightboxIndex = 0;
     let filteredDesigns = [];
+    let currentLanguage = localStorage.getItem('hamzaLanguage') || 'en';
+    let typingInterval = null;
+    let fullIntroEn = "Hi, I’m Hamza Tarek, a 16-year-old graphic designer passionate about creating visually impactful and modern designs. Despite working mainly on mobile using PixelLab and Photoshop Touch (PH Touch), I focus on delivering high-quality creative work with strong attention to detail, composition, and visual identity.";
+    let fullIntroAr = "مرحباً، أنا حمزة طارق، مصمم جرافيك عمره 16 سنة، شغوف بإنشاء تصاميم حديثة ومؤثرة بصرياً. على الرغم من أنني أعمل بشكل أساسي على الهاتف المحمول باستخدام PixelLab و Photoshop Touch، إلا أنني أركز على تقديم أعمال إبداعية عالية الجودة مع اهتمام كبير بالتفاصيل والتكوين والهوية البصرية.";
 
-    // Helper functions
     function escapeHtml(str) {
         return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;');
     }
 
-    // Ripple effect
     function addRipple(e, element) {
         const rect = element.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -587,8 +618,7 @@
         setTimeout(() => ripple.remove(), 600);
     }
 
-    // Create card with blur-up placeholder
-    function createCard(design, index) {
+    function createCard(design, index, lang) {
         const card = document.createElement('div');
         card.className = 'design-card';
         card.setAttribute('data-category', design.category);
@@ -598,7 +628,7 @@
         imgWrapper.className = 'img-wrapper';
         const img = document.createElement('img');
         img.src = design.image;
-        img.alt = design.title;
+        img.alt = design[lang].title;
         img.className = 'design-img blur-up';
         img.loading = 'lazy';
         
@@ -621,11 +651,11 @@
         
         const infoDiv = document.createElement('div');
         infoDiv.className = 'card-info';
-        let hint = design.category === 'cyber' ? '🎨 Cyber / Glitch' : '🌀 Fantasy / Neon';
-        infoDiv.innerHTML = `<h3>${escapeHtml(design.title)}</h3><p>${hint}</p><div class="click-badge">🔍 Click to read description</div>`;
+        let hint = design.category === 'cyber' ? (lang === 'en' ? '🎨 Cyber / Glitch' : '🎨 سايبر / جليتش') : (lang === 'en' ? '🌀 Fantasy / Neon' : '🌀 خيال / نيون');
+        infoDiv.innerHTML = `<h3>${escapeHtml(design[lang].title)}</h3><p>${hint}</p><div class="click-badge">${lang === 'en' ? '🔍 Click to read description' : '🔍 اضغط لقراءة الوصف'}</div>`;
         infoDiv.addEventListener('click', (e) => {
             e.stopPropagation();
-            openDescModal(design.title, design.desc);
+            openDescModal(design[lang].title, design[lang].desc);
             addRipple(e, card);
         });
         
@@ -637,9 +667,9 @@
     function renderGallery() {
         const container = document.getElementById('designGallery');
         container.innerHTML = '';
-        filteredDesigns = currentFilter === 'all' ? designs : designs.filter(d => d.category === currentFilter);
+        filteredDesigns = currentFilter === 'all' ? designsData : designsData.filter(d => d.category === currentFilter);
         filteredDesigns.forEach((design, idx) => {
-            container.appendChild(createCard(design, idx));
+            container.appendChild(createCard(design, idx, currentLanguage));
         });
         setTimeout(() => {
             document.querySelectorAll('.design-img').forEach(img => {
@@ -648,7 +678,72 @@
         }, 50);
     }
 
-    // Filter with transition effect
+    function updateLanguageUI() {
+        // Update typing effect
+        if (typingInterval) clearTimeout(typingInterval);
+        const typedIntroEl = document.getElementById('typedIntro');
+        typedIntroEl.innerHTML = '';
+        const fullText = currentLanguage === 'en' ? fullIntroEn : fullIntroAr;
+        let i = 0;
+        function typeWriter() {
+            if (i < fullText.length) {
+                typedIntroEl.innerHTML += fullText.charAt(i);
+                i++;
+                typingInterval = setTimeout(typeWriter, 20);
+            }
+        }
+        typeWriter();
+        
+        // Update name and tag
+        document.getElementById('nameText').innerHTML = currentLanguage === 'en' ? 'Hamza Tarek' : 'حمزة طارق';
+        document.getElementById('tagText').innerHTML = currentLanguage === 'en' ? '16 y/o • Graphic Designer' : '١٦ سنة • مصمم جرافيك';
+        
+        // Update skills
+        document.querySelectorAll('.skill').forEach(skill => {
+            const enText = skill.getAttribute('data-skill-en');
+            const arText = skill.getAttribute('data-skill-ar');
+            skill.textContent = currentLanguage === 'en' ? enText : arText;
+        });
+        
+        // Update filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            const enText = btn.getAttribute('data-en');
+            const arText = btn.getAttribute('data-ar');
+            btn.textContent = currentLanguage === 'en' ? enText : arText;
+        });
+        
+        // Update gallery title
+        document.getElementById('galleryTitle').innerHTML = currentLanguage === 'en' ? 'My designs' : 'تصاميمي';
+        
+        // Update footer
+        document.getElementById('footerText').innerHTML = currentLanguage === 'en' ? '© 2026 Hamza Tarek — Design that speaks' : '© ٢٠٢٦ حمزة طارق — تصميم يتحدث';
+        
+        // Update "Made by"
+        const madeByDiv = document.getElementById('madeByText');
+        if (currentLanguage === 'en') {
+            madeByDiv.innerHTML = 'Made by <a href="https://www.instagram.com/mnx_io1?igsh=MW81Znlqc2RldGd5bQ==" target="_blank" rel="noopener noreferrer">Doma</a>';
+        } else {
+            madeByDiv.innerHTML = 'صنع بواسطة <a href="https://www.instagram.com/mnx_io1?igsh=MW81Znlqc2RldGd5bQ==" target="_blank" rel="noopener noreferrer">دوما</a>';
+        }
+        
+        // Update modal close button
+        document.getElementById('closeModalBtn').innerHTML = currentLanguage === 'en' ? 'Close' : 'إغلاق';
+        
+        // Update RTL direction
+        if (currentLanguage === 'ar') {
+            document.body.classList.add('arabic');
+        } else {
+            document.body.classList.remove('arabic');
+        }
+        
+        // Update language toggle button text
+        document.getElementById('langToggle').innerHTML = currentLanguage === 'en' ? '🇸🇦 العربية' : '🇬🇧 English';
+        
+        // Re-render gallery with new language
+        renderGallery();
+    }
+
+    // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -674,7 +769,7 @@
     };
     window.closeDescModal = () => { descModal.style.display = 'none'; };
 
-    // Lightbox with counter & arrows
+    // Lightbox
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxCounter = document.getElementById('lightboxCounter');
@@ -695,10 +790,6 @@
             lightbox.style.display = 'flex';
         }
     }
-    window.openLightbox = (src) => {
-        const design = filteredDesigns.find(d => d.image === src);
-        if(design) openLightboxByDesign(design);
-    };
     window.closeLightbox = () => { lightbox.style.display = 'none'; };
     lightboxPrev.addEventListener('click', () => {
         if (filteredDesigns.length === 0) return;
@@ -710,7 +801,7 @@
         currentLightboxIndex = (currentLightboxIndex + 1) % filteredDesigns.length;
         updateLightbox();
     });
-    // Swipe support for mobile
+    
     let touchStartX = 0;
     lightbox.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
     lightbox.addEventListener('touchend', (e) => {
@@ -722,7 +813,7 @@
             else lightboxNext.click();
         }
     });
-    // Keyboard arrows for lightbox
+    
     document.addEventListener('keydown', (e) => {
         if (lightbox.style.display === 'flex') {
             if (e.key === 'ArrowLeft') lightboxPrev.click();
@@ -735,20 +826,15 @@
     descModal.addEventListener('click', (e) => { if(e.target === descModal) closeDescModal(); });
     lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
 
-    // Typing effect
-    const typedIntroEl = document.getElementById('typedIntro');
-    const fullIntro = "Hi, I’m Hamza Tarek, a 16-year-old graphic designer passionate about creating visually impactful and modern designs. Despite working mainly on mobile using PixelLab and Photoshop Touch (PH Touch), I focus on delivering high-quality creative work with strong attention to detail, composition, and visual identity.";
-    let i = 0;
-    function typeWriter() {
-        if (i < fullIntro.length) {
-            typedIntroEl.innerHTML += fullIntro.charAt(i);
-            i++;
-            setTimeout(typeWriter, 20);
-        }
-    }
-    typeWriter();
+    // Language toggle
+    const langToggle = document.getElementById('langToggle');
+    langToggle.addEventListener('click', () => {
+        currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
+        localStorage.setItem('hamzaLanguage', currentLanguage);
+        updateLanguageUI();
+    });
 
-    // Dark/Light mode: light default
+    // Dark/Light mode
     const themeToggle = document.getElementById('themeToggle');
     function setTheme(theme) {
         if (theme === 'dark') {
@@ -767,7 +853,7 @@
         setTheme(isDark ? 'light' : 'dark');
     });
 
-    // Back to Top on scroll
+    // Back to Top
     const backBtn = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 200) backBtn.classList.add('show');
@@ -775,7 +861,7 @@
     });
     backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Scroll reveal observer
+    // Scroll reveal
     const revealElements = document.querySelectorAll('.scroll-reveal');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -784,11 +870,13 @@
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.1 });
     revealElements.forEach(el => observer.observe(el));
 
-    // Initial render
-    renderGallery();
+    // Initialize
+    if (savedTheme === 'dark') document.body.classList.add('dark');
+    if (currentLanguage === 'ar') document.body.classList.add('arabic');
+    updateLanguageUI();
 </script>
 </body>
 </html>
