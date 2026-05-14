@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Portfolio of Hamza Tarek, 16-year-old graphic designer creating cyber, glitch, and fantasy art using PixelLab and PH Touch.">
     <title>Hamza Tarek | Graphic Designer</title>
+    <meta property="og:title" content="Hamza Tarek | makes designs">
+    <meta property="og:description" content="16yo making glitch art & neon stuff on phone">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://placehold.co/1200x630/0a0a0f/ff3e6c?text=Hamza+Tarek">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -13,81 +18,60 @@
             box-sizing: border-box;
         }
 
-        /* LIGHT MODE (default) */
         body {
-            --bg: #f5f7fe;
-            --surface: #ffffff;
-            --surface-alpha: rgba(255, 255, 255, 0.85);
-            --text: #1e1e2f;
-            --text-light: #4a4a6a;
-            --accent: #ff3e6c;
-            --accent-glow: #ff9eb6;
-            --border: #ddddee;
-            --card-bg: #ffffff;
-            --card-border: rgba(0,0,0,0.08);
-            --hero-bg: linear-gradient(145deg, #fefefe 0%, #f0f2fa 100%);
-            --tag-bg: #ffe4ec;
-            --tag-text: #b13e5c;
-            --skill-bg: #e9ecef;
-            --skill-text: #2c3e66;
-            --placeholder: #ddd;
-            background: var(--bg);
-            color: var(--text);
-            transition: background-color 0.3s, color 0.2s;
-        }
-
-        /* DARK MODE */
-        body.dark {
             --bg: #0a0a0f;
             --surface: #111118;
-            --surface-alpha: rgba(20, 20, 30, 0.7);
+            --surface-light: rgba(20,20,30,0.7);
             --text: #f0f0f0;
-            --text-light: #aaaac0;
+            --text-dim: #aaaac0;
             --accent: #ff3e6c;
-            --accent-glow: #ff9eb6;
+            --accent-soft: #ff9eb6;
             --border: #22222c;
-            --card-bg: rgba(20, 20, 30, 0.7);
-            --card-border: rgba(255,255,255,0.05);
-            --hero-bg: linear-gradient(145deg, #111118 0%, #0b0b12 100%);
-            --tag-bg: #ff3e6c20;
-            --tag-text: #ff9eb6;
-            --skill-bg: #1e1e2a;
-            --skill-text: #cdcddf;
+            --card-bg: rgba(20,20,30,0.7);
             --placeholder: #2a2a3a;
-        }
-
-        body {
-            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Poppins', system-ui, sans-serif;
             line-height: 1.5;
-            scroll-behavior: smooth;
+            transition: background 0.2s;
         }
 
-        /* Arabic RTL support */
+        body.light {
+            --bg: #f5f7fe;
+            --surface: #ffffff;
+            --surface-light: rgba(255,255,255,0.85);
+            --text: #1e1e2f;
+            --text-dim: #4a4a6a;
+            --accent: #ff3e6c;
+            --accent-soft: #ff9eb6;
+            --border: #ddddee;
+            --card-bg: #ffffff;
+            --placeholder: #ddd;
+        }
+
         body.arabic {
             direction: rtl;
-            font-family: 'Cairo', 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Cairo', 'Poppins', sans-serif;
         }
-        body.arabic .intro-text {
-            text-align: right;
-        }
-        body.arabic .skills, body.arabic .social-links, body.arabic .filter-bar {
-            justify-content: flex-start;
-        }
-        @media (max-width: 700px) {
-            body.arabic .skills, body.arabic .social-links, body.arabic .filter-bar {
-                justify-content: center;
-            }
-        }
+        
+        body.arabic .intro-text { text-align: right; }
+        body.arabic .section-title::after { left: auto; right: 0; }
+        body.arabic .about-card { border-left: none; border-right: 4px solid var(--accent); }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--border); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--border);
-        }
-        ::-webkit-scrollbar-thumb {
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
             background: var(--accent);
-            border-radius: 10px;
+            z-index: 999;
+            width: 0%;
+            transition: width 0.08s;
+            box-shadow: 0 0 8px var(--accent);
         }
 
         .container {
@@ -96,767 +80,903 @@
             padding: 2rem 1.5rem;
         }
 
-        /* Toggle buttons group - stacked vertically */
-        .toggle-group {
+        .splash {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.4s;
+        }
+        .splash h1 {
+            font-size: 3rem;
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent);
+            animation: glitchPulse 0.8s infinite;
+        }
+        .splash .bar {
+            width: 200px;
+            height: 3px;
+            background: var(--border);
+            margin-top: 2rem;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .splash .fill {
+            width: 0%;
+            height: 100%;
+            background: var(--accent);
+            animation: loadMe 1.4s ease forwards;
+        }
+        @keyframes loadMe { to { width: 100%; } }
+        @keyframes glitchPulse {
+            0%,100%{ opacity:1; }
+            96%{ opacity:1; transform:skew(0deg); }
+            97%{ opacity:0.8; transform:skew(2deg); }
+            98%{ opacity:0.9; transform:skew(-2deg); }
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 3px;
+            background: var(--surface-light);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--accent);
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            z-index: 100;
+        }
+        .sticky-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            padding-bottom: 4px;
+            white-space: nowrap;
+        }
+        .sticky-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+
+        .float-buttons {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 1000;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            align-items: flex-end;
+            z-index: 999;
         }
-        .lang-toggle, .theme-toggle {
+        .float-btn {
             background: var(--surface);
             border: 1px solid var(--accent);
-            border-radius: 50px;
-            padding: 0.6rem 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
             cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            font-size: 0.8rem;
             color: var(--accent);
+            backdrop-filter: blur(8px);
+            transition: 0.2s;
         }
-        .lang-toggle:hover, .theme-toggle:hover {
-            transform: scale(1.08) rotate(4deg);
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 0 12px var(--accent);
-        }
+        .float-btn:hover { background: var(--accent); color: white; }
 
-        /* Back to Top - positioned above the toggle group */
-        .back-to-top {
-            position: fixed;
-            bottom: 140px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--surface);
-            border: 1px solid var(--accent);
-            border-radius: 50px;
-            padding: 0.6rem 1rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            backdrop-filter: blur(8px);
-            transition: all 0.2s;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .back-top {
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px);
+            transition: 0.2s;
         }
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .back-to-top:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-3px);
-        }
+        .back-top.show { opacity: 1; visibility: visible; }
 
-        /* Hero */
         .hero {
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
             gap: 3rem;
-            margin-bottom: 3rem;
-            background: var(--hero-bg);
-            border-radius: 2.5rem;
+            margin-bottom: 4rem;
+            background: var(--surface-light);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
             padding: 2rem;
             border: 1px solid var(--accent);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s;
+            transition: 0.2s;
         }
-        .hero:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 25px 40px -12px rgba(255, 62, 108, 0.3);
-        }
-
+        .hero:hover { transform: translateY(-3px); }
+        
         .profile-pic {
             position: relative;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
+            animation: float 3s infinite;
         }
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
+            0%,100%{ transform: translateY(0); }
+            50%{ transform: translateY(-6px); }
         }
         .circle-img {
-            width: 160px;
-            height: 160px;
+            width: 130px;
+            height: 130px;
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid var(--accent);
-            box-shadow: 0 0 0 4px var(--accent-glow)40;
-            transition: transform 0.3s ease, box-shadow 0.3s;
         }
-        .circle-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 0 6px var(--accent);
-        }
-        .online-bubble {
+        .online-dot {
             position: absolute;
-            bottom: 8px;
-            right: 8px;
-            width: 22px;
-            height: 22px;
-            background-color: #2ecc71;
-            border: 3px solid var(--surface);
+            bottom: 6px;
+            right: 6px;
+            width: 16px;
+            height: 16px;
+            background: #2ecc71;
             border-radius: 50%;
-            box-shadow: 0 0 0 2px var(--accent);
+            border: 2px solid var(--surface);
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.7; }
-            70% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.7; }
+            0%,100%{ transform: scale(0.95); opacity: 0.7; }
+            50%{ transform: scale(1.1); opacity: 1; }
         }
 
         .intro-text h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--text) 30%, var(--accent) 70%);
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, var(--text), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
+        
         .tag {
             display: inline-block;
-            background: var(--tag-bg);
-            padding: 0.25rem 1rem;
+            background: var(--accent);
+            padding: 0.2rem 1rem;
             border-radius: 40px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 500;
-            color: var(--tag-text);
             margin-top: 0.5rem;
-            border: 1px solid var(--accent)40;
         }
+        
         .skills {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.7rem;
-            margin-top: 1.2rem;
+            gap: 0.5rem;
+            margin: 1rem 0;
         }
         .skill {
-            background: var(--skill-bg);
-            color: var(--skill-text);
-            padding: 0.3rem 0.9rem;
+            background: var(--surface);
+            padding: 0.2rem 0.8rem;
             border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid var(--accent)30;
-            transition: 0.2s;
+            font-size: 0.7rem;
+            transition: 0.1s;
         }
-        .skill:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px var(--accent);
-        }
-        .social-links {
+        .skill:hover { background: var(--accent); color: white; }
+
+        .social-icons {
             display: flex;
-            gap: 1.2rem;
-            margin-top: 1.2rem;
+            gap: 1rem;
+            margin-top: 1rem;
         }
         .social-icon {
-            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
-            background: var(--surface-alpha);
+            background: var(--surface-light);
             border-radius: 50%;
             color: var(--accent);
-            font-size: 1.6rem;
             border: 1px solid var(--accent);
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: 0.15s;
         }
-        .social-icon:hover {
+        .social-icon:hover { background: var(--accent); color: white; transform: translateY(-2px); }
+
+        .about-card {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: var(--surface-light);
+            border-radius: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 50%;
+            height: 3px;
             background: var(--accent);
-            color: white;
-            transform: translateY(-5px) rotate(8deg);
-            box-shadow: 0 5px 12px var(--accent);
+            border-radius: 3px;
         }
+
+        .location-text {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .tools-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        .tool-card {
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            text-align: center;
+            min-width: 120px;
+        }
+        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 0 12px var(--accent-soft); }
+        .tool-icon { font-size: 1.8rem; margin-bottom: 0.3rem; }
+        .tool-name { font-weight: 700; font-size: 0.9rem; }
 
         .filter-bar {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.6rem;
             flex-wrap: wrap;
+            margin: 1.5rem 0;
         }
         .filter-btn {
             background: var(--surface);
             border: 1px solid var(--accent);
-            padding: 0.5rem 1.5rem;
+            padding: 0.3rem 1.2rem;
             border-radius: 40px;
             cursor: pointer;
-            font-weight: 500;
-            color: var(--text);
-            transition: all 0.2s;
+            font-size: 0.8rem;
+            transition: 0.1s;
         }
-        .filter-btn.active {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            box-shadow: 0 2px 8px var(--accent);
-        }
-        .filter-btn:hover:not(.active) {
-            background: var(--accent)30;
-            transform: translateY(-2px);
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
-        }
+        .filter-btn.active { background: var(--accent); color: white; }
+        .filter-btn:hover:not(.active) { background: var(--accent-soft); color: var(--text); }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            transition: opacity 0.15s;
         }
+        
         .design-card {
             background: var(--card-bg);
-            backdrop-filter: blur(4px);
-            border-radius: 1.5rem;
+            backdrop-filter: blur(8px);
+            border-radius: 1.2rem;
             overflow: hidden;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2), box-shadow 0.3s, border-color 0.2s;
+            border: 1px solid var(--border);
+            transition: 0.2s;
             opacity: 0;
             transform: translateY(20px);
-            animation: cardAppear 0.5s forwards;
+            animation: fadeUp 0.4s forwards;
             position: relative;
         }
-        @keyframes cardAppear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .design-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        
+        .design-card.featured {
+            grid-column: span 2;
         }
-        .design-card:hover {
-            transform: translateY(-10px) scale(1.01);
-            border-color: var(--accent);
-            box-shadow: 0 25px 35px -12px rgba(255, 62, 108, 0.3);
+        @media (max-width: 800px) {
+            .design-card.featured { grid-column: span 1; }
         }
-        .ripple {
+        
+        .featured-badge {
             position: absolute;
-            border-radius: 50%;
-            background: var(--accent);
-            transform: scale(0);
-            animation: rippleAnim 0.6s linear;
-            pointer-events: none;
+            top: 10px;
+            left: 10px;
+            background: gold;
+            color: black;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            z-index: 5;
         }
-        @keyframes rippleAnim {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
+        
         .img-wrapper {
             position: relative;
             cursor: pointer;
             overflow: hidden;
-            background: var(--placeholder);
         }
         .design-img {
             width: 100%;
-            aspect-ratio: 1220 / 686;
+            aspect-ratio: 1220/686;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease, filter 0.3s;
+            transition: 0.25s;
             opacity: 0;
-            transition: opacity 0.3s ease, transform 0.5s;
         }
-        .design-img.loaded {
-            opacity: 1;
-        }
-        .design-img.blur-up {
-            filter: blur(10px);
-            transform: scale(1.02);
-        }
-        .img-wrapper:hover .design-img {
-            transform: scale(1.08);
-            filter: brightness(1.05) contrast(1.05);
-        }
-        .card-info {
-            padding: 1rem 1.2rem 1.2rem;
-            cursor: pointer;
-        }
-        .card-info h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-        .card-info:hover h3 {
-            color: var(--accent);
-        }
-        .card-info p {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-top: 0.25rem;
-        }
-        .click-badge {
-            margin-top: 0.6rem;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--accent-glow);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--surface-alpha);
-            padding: 0.2rem 0.7rem;
-            border-radius: 40px;
-            transition: all 0.2s;
-        }
-        .card-info:hover .click-badge {
+        .design-img.loaded { opacity: 1; }
+        .img-wrapper:hover .design-img { transform: scale(1.02); }
+        
+        .category-pill {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             background: var(--accent);
             color: white;
-            gap: 10px;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        
+        .card-info {
+            padding: 0.7rem 1rem 1rem;
+            cursor: pointer;
+        }
+        .card-info h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+        .tools-used { font-size: 0.65rem; color: var(--text-dim); margin: 0.2rem 0; }
+        .click-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--surface-light);
+            padding: 0.15rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            margin-top: 0.4rem;
         }
 
-        .modal, .lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:1100; justify-content:center; align-items:center; }
-        .modal-content { max-width:600px; background:var(--surface); border-radius:2rem; padding:1.8rem; border-left:4px solid var(--accent); color:var(--text); animation:modalPop 0.25s; }
-        .close-modal { margin-top:1.5rem; background:var(--accent); border:none; padding:0.5rem 1.5rem; border-radius:30px; color:white; cursor:pointer; transition:0.2s; }
-        .close-modal:hover { transform:scale(1.02); background:#ff6b8f; }
-
-        .lightbox { z-index:1200; background:rgba(0,0,0,0.95); cursor:default; }
-        .lightbox-content { position: relative; display: flex; align-items: center; justify-content: center; width:100%; height:100%; }
-        .lightbox img { max-width:90vw; max-height:85vh; border-radius:1rem; box-shadow:0 0 30px black; transition:transform 0.2s; cursor:zoom-out; }
-        .lightbox img:hover { transform:scale(1.02); }
-        .lightbox-close { position:absolute; top:20px; right:30px; font-size:2rem; color:white; background:none; border:none; cursor:pointer; transition:0.2s; z-index:1201; }
-        .lightbox-close:hover { transform:rotate(90deg); color:var(--accent); }
-        .lightbox-prev, .lightbox-next { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); color:white; border:none; font-size:2rem; padding:0.8rem 1rem; cursor:pointer; border-radius:50%; transition:0.2s; z-index:1201; }
-        .lightbox-prev { left:20px; }
-        .lightbox-next { right:20px; }
-        .lightbox-prev:hover, .lightbox-next:hover { background:var(--accent); transform:translateY(-50%) scale(1.1); }
-        .lightbox-counter { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.7); color:white; padding:0.3rem 1rem; border-radius:30px; font-size:0.9rem; font-weight:500; z-index:1201; }
-
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        footer {
-            margin-top: 4rem;
+        .contact-box {
+            margin: 4rem 0 2rem;
+            padding: 2rem;
+            background: var(--surface-light);
+            border-radius: 1.5rem;
             text-align: center;
-            padding: 1.5rem 0 0.5rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-light);
+            border: 1px solid var(--accent);
         }
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            margin-top: 1rem;
-        }
-        .made-by {
-            text-align: center;
-            font-size: 0.75rem;
-            margin-top: 1.5rem;
-            padding-bottom: 1rem;
-            color: var(--text-light);
-        }
-        .made-by a {
-            color: var(--accent);
+        .dm-btn {
+            display: inline-flex;
+            gap: 8px;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.3rem;
+            border-radius: 50px;
             text-decoration: none;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .dm-btn:hover { transform: scale(1.02); box-shadow: 0 0 12px var(--accent); }
+
+        .modal, .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-inner {
+            max-width: 500px;
+            background: var(--surface);
+            padding: 1.8rem;
+            border-radius: 1.2rem;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .lightbox-img {
+            max-width: 85vw;
+            max-height: 80vh;
+            border-radius: 1rem;
+            opacity: 0;
             transition: 0.2s;
+            cursor: zoom-in;
         }
-        .made-by a:hover {
-            text-decoration: underline;
-            color: var(--accent-glow);
+        .lightbox-img.loaded { opacity: 1; }
+        .lightbox-img.zoomed { transform: scale(1.4); cursor: zoom-out; }
+        @media (max-width: 700px) { .lightbox-img.zoomed { transform: none; } }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            white-space: nowrap;
         }
-
-        @keyframes modalPop { from { transform:scale(0.95); opacity:0; } to { transform:scale(1); opacity:1; } }
-
+        
+        .lb-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .lb-prev { left: 20px; }
+        .lb-next { right: 20px; }
+        .lb-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: 0.5s;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        
         @media (max-width: 700px) {
+            .container { padding: 1rem; }
             .hero { flex-direction: column; text-align: center; }
-            body.arabic .intro-text { text-align: center; }
-            .social-links, .skills { justify-content: center; }
-            .intro-text h1 { font-size: 2rem; }
-            .gallery { grid-template-columns: 1fr; }
-            .back-to-top { bottom: 130px; right: 15px; padding: 0.4rem 0.8rem; font-size:1rem; }
-            .toggle-group { bottom: 15px; right: 15px; }
-            .online-bubble { width:18px; height:18px; bottom:5px; right:5px; }
-            .lightbox-prev, .lightbox-next { font-size:1.5rem; padding:0.5rem 0.7rem; }
-            .lightbox-close { top:10px; right:15px; font-size:1.5rem; }
+            .skills, .social-icons { justify-content: center; }
         }
     </style>
 </head>
-<body>
+<body class="dark">
+    <div class="splash" id="splash">
+        <h1>HAMZA TAREK</h1>
+        <div class="bar"><div class="fill"></div></div>
+    </div>
 
-<div class="container">
-    <div class="hero scroll-reveal">
-        <div class="profile-pic">
-            <img class="circle-img" src="hamzapfp.jpg" alt="Hamza Tarek" onerror="this.src='https://placehold.co/400x400/2a2a3a/white?text=Photo'">
-            <div class="online-bubble"></div>
-        </div>
-        <div class="intro-text">
-            <h1 id="nameText">Hamza Tarek</h1>
-            <div class="tag" id="tagText">16 y/o • Graphic Designer</div>
-            <p id="typedIntro"></p>
-            <div class="skills" id="skillsContainer">
-                <span class="skill" data-skill-en="PixelLab" data-skill-ar="بيكسل لاب">PixelLab</span>
-                <span class="skill" data-skill-en="PH Touch" data-skill-ar="فوتوشوب تاتش">PH Touch</span>
-                <span class="skill" data-skill-en="Glitch Art" data-skill-ar="فن الجليتش">Glitch Art</span>
-                <span class="skill" data-skill-en="Typography" data-skill-ar="طباعة">Typography</span>
-                <span class="skill" data-skill-en="Neon Effects" data-skill-ar="تأثيرات نيون">Neon Effects</span>
-                <span class="skill" data-skill-en="Fantasy Design" data-skill-ar="تصميم خيالي">Fantasy Design</span>
+    <div class="scroll-progress" id="progressBar"></div>
+
+    <div class="sticky-nav">
+        <a href="#home" class="nav-link" data-en="HOME" data-ar="الرئيسية">HOME</a>
+        <a href="#about" class="nav-link" data-en="ABOUT" data-ar="عن">ABOUT</a>
+        <a href="#work" class="nav-link" data-en="WORKS" data-ar="أعمال">WORKS</a>
+        <a href="#contact" class="nav-link" data-en="CONTACT" data-ar="اتصال">CONTACT</a>
+    </div>
+
+    <div class="container">
+        <div id="home" class="hero reveal">
+            <div class="profile-pic">
+                <img class="circle-img" src="hamzapfp.jpg" alt="hamza" onerror="this.src='https://placehold.co/400x400'">
+                <div class="online-dot"></div>
             </div>
-            <div class="social-links">
-                <a href="https://www.instagram.com/hamzatarek_19?igsh=c24yeTVscmc2bzVi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/share/1BSxJ7VjKV/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <div class="intro-text">
+                <h1 id="name">Hamza Tarek</h1>
+                <div class="tag" id="ageTag">16 y/o • Designer</div>
+                <p id="bioText"></p>
+                <div class="skills" id="skillsList">
+                    <span class="skill" data-en="PixelLab" data-ar="بيكسل لاب">PixelLab</span>
+                    <span class="skill" data-en="PH Touch" data-ar="فوتوشوب تاتش">PH Touch</span>
+                    <span class="skill" data-en="Picsart" data-ar="بيكس آرت">Picsart</span>
+                    <span class="skill" data-en="Glitch Art" data-ar="جليتش">Glitch Art</span>
+                    <span class="skill" data-en="Typography" data-ar="طباعة">Typography</span>
+                </div>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/hamzatarek_19" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1BSxJ7VjKV/" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div>
-        <h2 class="section-title scroll-reveal" id="galleryTitle">My designs</h2>
-        <div class="filter-bar scroll-reveal" id="filterBar">
-            <button class="filter-btn active" data-filter="all" data-en="All" data-ar="الكل">All</button>
-            <button class="filter-btn" data-filter="cyber" data-en="Cyber" data-ar="سايبر">Cyber</button>
-            <button class="filter-btn" data-filter="fantasy" data-en="Fantasy" data-ar="خيال">Fantasy</button>
+        <div id="about" class="about-card reveal">
+            <h2 class="section-title" id="aboutTitle">📖 About me</h2>
+            <div class="location-text" id="location">🇪🇬 Egypt • Cairo</div>
+            <p id="aboutDesc"></p>
+            
+            <div class="tools-grid">
+                <div class="tool-card"><div class="tool-icon">📱</div><div class="tool-name">PH Touch</div><div class="tool-desc" id="tool1">Photo manipulation</div></div>
+                <div class="tool-card"><div class="tool-icon">🎨</div><div class="tool-name">Picsart</div><div class="tool-desc" id="tool2">Editing & effects</div></div>
+            </div>
         </div>
-        <div class="gallery" id="designGallery"></div>
-    </div>
-    <footer class="scroll-reveal">
-        <p id="footerText">© 2026 Hamza Tarek — Design that speaks</p>
-        <div class="footer-social">
-            <a href="https://www.instagram.com/hamzatarek_19?igsh=c24yeTVscmc2bzVi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/share/1BSxJ7VjKV/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+
+        <div id="work">
+            <h2 class="section-title reveal" id="galleryTitle">⚡ My designs</h2>
+            <div class="filter-bar reveal" id="filterBar">
+                <button class="filter-btn active" data-filter="all" data-en="All" data-ar="الكل">All</button>
+                <button class="filter-btn" data-filter="cyber" data-en="Cyber" data-ar="سايبر">Cyber</button>
+                <button class="filter-btn" data-filter="fantasy" data-en="Fantasy" data-ar="خيال">Fantasy</button>
+            </div>
+            <div class="gallery" id="gallery"></div>
         </div>
-    </footer>
-    <div class="made-by" id="madeByText">
-        Made by <a href="https://www.instagram.com/mnx_io1?igsh=MW81Znlqc2RldGd5bQ==" target="_blank" rel="noopener noreferrer">Doma</a>
+
+        <div id="contact" class="contact-box reveal">
+            <h3 id="contactTitle">📬 Wanna collab?</h3>
+            <p id="contactText">DM me on Instagram for commissions</p>
+            <a href="https://www.instagram.com/hamzatarek_19" class="dm-btn" id="dmLink"><i class="fab fa-instagram"></i> <span id="dmLabel">DM me</span></a>
+        </div>
+
+        <footer>
+            <p id="footerText">© 2026 Hamza Tarek</p>
+            <div id="creditLine" style="margin-top: 6px;">Made by <a href="https://www.instagram.com/mnx_io1" target="_blank" style="color: var(--accent);">Doma</a></div>
+        </footer>
     </div>
-</div>
 
-<div class="toggle-group">
-    <button class="lang-toggle" id="langToggle">🇸🇦 العربية</button>
-    <button class="theme-toggle" id="themeToggle">☀️ Light</button>
-</div>
-<button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i> Top</button>
-
-<div id="descModal" class="modal"><div class="modal-content"><h3 id="modalTitle">✨ Design details</h3><p id="modalDesc"></p><button class="close-modal" id="closeModalBtn">Close</button></div></div>
-
-<div id="lightbox" class="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    <button class="lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
-    <button class="lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
-    <div class="lightbox-content">
-        <img id="lightboxImg" src="">
+    <div class="float-buttons">
+        <button class="float-btn" id="langBtn">🇸🇦 العربية</button>
+        <button class="float-btn" id="themeBtn">🌙 Dark</button>
+        <button class="float-btn back-top" id="topBtn"><i class="fas fa-arrow-up"></i> Top</button>
     </div>
-    <div class="lightbox-counter" id="lightboxCounter">1 / 5</div>
-</div>
 
-<script>
-    // ----- DESIGN DATA (English + Arabic) -----
-    const designsData = [
-        { id:1, category:"cyber", image:"1.jpg",
-          en: { title:"Hatsune Miku • Cyber Vibe", desc:"Featuring Hatsune Miku in a vibrant cyber-inspired aesthetic, this design combines glitch effects, neon colors, and VHS-style textures to create a bold futuristic atmosphere. The composition focuses on strong visual contrast, energetic typography, and detailed lighting to deliver a dynamic and eye-catching artwork." },
-          ar: { title:"هاتسوني ميكو • إحساس سايبر", desc:"يتميز هذا التصميم بهاتسوني ميكو في جمالية مستوحاة من السايبر، حيث يجمع بين تأثيرات الجليتش والألوان النيون وتكسيرات فيديو قديمة لخلق أجواء مستقبلية جريئة. يركز التكوين على التباين البصري القوي والطباعة النشطة والإضاءة المفصلة لتقديم عمل فني ديناميكي وجذاب." } },
-        { id:2, category:"fantasy", image:"2.jpg",
-          en: { title:"JAX • Digital Circus Neon Glitch", desc:"This design Inspired by The Amazing Digital Circus, this artwork presents a surreal neon-glitch aesthetic centered around the character Jax. The design uses intense purple and pink lighting, distorted VHS textures, and cosmic visual effects to create a chaotic digital atmosphere." },
-          ar: { title:"جاكس • سيرك رقمي نيون جليتش", desc:"هذا التصميم مستوحى من \"السيرك الرقمي المذهل\"، يقدم جمالية سريالية من النيون والجليتش تتمحور حول شخصية جاكس. يستخدم التصميم إضاءات أرجوانية ووردية كثيفة وتكسيرات فيديو وتأثيرات كونية لخلق جو رقمي فوضوي." } },
-        { id:3, category:"fantasy", image:"3.jpg",
-          en: { title:"Rouxls Kaard • Dark Fantasy Neon", desc:"This design features Rouxls Kaard in a dark fantasy-inspired composition with glowing neon lighting and layered typography. The artwork combines deep purple and cyan tones with textured effects, abstract patterns, and dramatic contrast to create a mysterious and intense atmosphere." },
-          ar: { title:"روكس كارد • فانتازيا مظلمة نيون", desc:"يقدم هذا التصميم روكس كارد في تكوين مستوحى من الفانتازيا المظلمة مع إضاءة نيون متوهجة وطباعة متعددة الطبقات. يجمع العمل بين درجات الأرجواني العميق والسيان مع تأثيرات محكمية وأنماط مجردة وتباين دراماتيكي." } },
-        { id:4, category:"fantasy", image:"4.jpg",
-          en: { title:"Undyne • Fierce & Aggressive", desc:"This design Featuring Undyne in a powerful and aggressive visual style, this design combines intense lighting, sharp contrast, and energetic effects to reflect the character's fierce personality." },
-          ar: { title:"أنداين • شرسة وقوية", desc:"يتميز هذا التصميم بأنداين في أسلوب بصري قوي وعدائي، يجمع بين الإضاءة الشديدة والتباين الحاد والتأثيرات النشطة ليعكس شخصية الشخصية الشرسة." } },
-        { id:5, category:"fantasy", image:"5.jpg",
-          en: { title:"Chara / Frisk • Duality", desc:"This design presents Chara and Frisk through a dual-sided composition that symbolizes contrast between innocence and darkness. The design combines atmospheric lighting, deep shadows, and emotional color grading to create a dramatic visual balance between the two characters." },
-          ar: { title:"شارا / فريسك • الازدواجية", desc:"يقدم هذا التصميم شارا وفريسك من خلال تكوين ثنائي الجانب يرمز إلى التباين بين البراءة والظلام. يجمع التصميم بين الإضاءة الجوية والظلال العميقة وتدرجات الألوان العاطفية." } }
-    ];
+    <div id="descModal" class="modal"><div class="modal-inner"><h3 id="modalTitle"></h3><p id="modalDesc" style="margin: 1rem 0;"></p><button class="float-btn" id="closeModalBtn" style="background: var(--accent); color:white;">Close</button></div></div>
 
-    let currentFilter = "all";
-    let currentLightboxIndex = 0;
-    let filteredDesigns = [];
-    let currentLanguage = localStorage.getItem('hamzaLanguage') || 'en';
-    let typingInterval = null;
-    let fullIntroEn = "Hi, I'm Hamza Tarek, a 16-year-old graphic designer passionate about creating visually impactful and modern designs. Despite working mainly on mobile using PixelLab and Photoshop Touch (PH Touch), I focus on delivering high-quality creative work with strong attention to detail, composition, and visual identity.";
-    let fullIntroAr = "مرحباً، أنا حمزة طارق، مصمم جرافيك عمره 16 سنة، شغوف بإنشاء تصاميم حديثة ومؤثرة بصرياً. على الرغم من أنني أعمل بشكل أساسي على الهاتف المحمول باستخدام PixelLab و Photoshop Touch، إلا أنني أركز على تقديم أعمال إبداعية عالية الجودة مع اهتمام كبير بالتفاصيل والتكوين والهوية البصرية.";
+    <div id="lightboxModal" class="lightbox">
+        <button class="lb-close" id="lbClose">✕</button>
+        <button class="lb-btn lb-prev" id="lbPrev">‹</button>
+        <button class="lb-btn lb-next" id="lbNext">›</button>
+        <div style="position: relative; display: flex; justify-content: center;">
+            <div style="position: absolute; width: 40px; height: 40px; border: 3px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite;" id="lbSpinner"></div>
+            <img id="lbImage" class="lightbox-img" src="">
+        </div>
+        <div class="lightbox-caption" id="lbCaption"></div>
+    </div>
 
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;');
-    }
+    <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 
-    function addRipple(e, element) {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.style.position = 'absolute';
-        ripple.style.width = '10px';
-        ripple.style.height = '10px';
-        ripple.style.backgroundColor = 'var(--accent)';
-        ripple.style.borderRadius = '50%';
-        ripple.style.pointerEvents = 'none';
-        element.style.position = 'relative';
-        element.style.overflow = 'hidden';
-        element.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
-    }
-
-    function createCard(design, index, lang) {
-        const card = document.createElement('div');
-        card.className = 'design-card';
-        card.setAttribute('data-category', design.category);
-        card.style.animationDelay = (index * 0.05) + 's';
+    <script>
+        const allDesigns = [
+            { id:0, cat:"cyber", img:"1.jpg", tools:"PH Touch • 3h", feat:true,
+              en:{ title:"Hatsune Miku // Cyber", desc:"Glitch effects, neon colors, VHS textures. Cyber aesthetic with strong visual contrast and energetic typography." },
+              ar:{ title:"هاتسوني ميكو // سايبر", desc:"تأثيرات الجليتش، ألوان نيون، تكسيرات فيديو. جمالية سايبر مع تباين بصري قوي وطباعة نشطة." } },
+            { id:1, cat:"fantasy", img:"2.jpg", tools:"Picsart • 2.5h", feat:false,
+              en:{ title:"JAX // Digital Circus", desc:"Neon glitch aesthetic with intense purple/pink lighting and cosmic visual effects." },
+              ar:{ title:"جاكس // سيرك رقمي", desc:"جمالية جليتش نيون مع إضاءات أرجوانية ووردية كثيفة وتأثيرات كونية." } },
+            { id:2, cat:"fantasy", img:"3.jpg", tools:"PH Touch • 4h", feat:false,
+              en:{ title:"Rouxls Kaard", desc:"Dark fantasy composition with glowing neon lighting and layered typography." },
+              ar:{ title:"روكس كارد", desc:"تكوين فانتازيا مظلمة مع إضاءة نيون متوهجة وطباعة متعددة الطبقات." } },
+            { id:3, cat:"fantasy", img:"4.jpg", tools:"Picsart • 2h", feat:false,
+              en:{ title:"Undyne", desc:"Powerful aggressive style with intense lighting and sharp contrast." },
+              ar:{ title:"أنداين", desc:"أسلوب قوي وعدائي مع إضاءة شديدة وتباين حاد." } },
+            { id:4, cat:"fantasy", img:"5.jpg", tools:"PH Touch • 4h", feat:false,
+              en:{ title:"Chara / Frisk", desc:"Duality between innocence and darkness. Atmospheric lighting and cinematic grading." },
+              ar:{ title:"شارا / فريسك", desc:"ازدواجية بين البراءة والظلام. إضاءة جوية وتدرج سينمائي." } }
+        ];
         
-        const imgWrapper = document.createElement('div');
-        imgWrapper.className = 'img-wrapper';
-        const img = document.createElement('img');
-        img.src = design.image;
-        img.alt = design[lang].title;
-        img.className = 'design-img blur-up';
-        img.loading = 'lazy';
-        
-        const highResImg = new Image();
-        highResImg.src = design.image;
-        highResImg.onload = () => {
-            img.classList.remove('blur-up');
-            img.classList.add('loaded');
+        const comingSoon = {
+            cat:"soon", img:"", tools:"???", feat:false,
+            en:{ title:"[COMING SOON]", desc:"New piece loading... glitchy neon chaos incoming." },
+            ar:{ title:"[قريباً]", desc:"قطعة جديدة قادمة... فوضى نيون وجليتش." }
         };
-        if(img.complete) {
-            img.classList.remove('blur-up');
-            img.classList.add('loaded');
-        }
-        
-        imgWrapper.appendChild(img);
-        imgWrapper.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openLightboxByDesign(design);
-        });
-        
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'card-info';
-        let hint = design.category === 'cyber' ? (lang === 'en' ? '🎨 Cyber / Glitch' : '🎨 سايبر / جليتش') : (lang === 'en' ? '🌀 Fantasy / Neon' : '🌀 خيال / نيون');
-        infoDiv.innerHTML = `<h3>${escapeHtml(design[lang].title)}</h3><p>${hint}</p><div class="click-badge">${lang === 'en' ? '🔍 Click to read description' : '🔍 اضغط لقراءة الوصف'}</div>`;
-        infoDiv.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openDescModal(design[lang].title, design[lang].desc);
-            addRipple(e, card);
-        });
-        
-        card.appendChild(imgWrapper);
-        card.appendChild(infoDiv);
-        return card;
-    }
 
-    function renderGallery() {
-        const container = document.getElementById('designGallery');
-        container.innerHTML = '';
-        filteredDesigns = currentFilter === 'all' ? designsData : designsData.filter(d => d.category === currentFilter);
-        filteredDesigns.forEach((design, idx) => {
-            container.appendChild(createCard(design, idx, currentLanguage));
-        });
+        let currentFilter = "all";
+        let currentLang = localStorage.getItem('lang') || 'en';
+        let filteredList = [];
+        let lightboxIndex = 0;
+        let zoomActive = false;
+        
+        const introEN = "Hi, I'm Hamza Tarek, 16. I'm a graphic designer on my phone using PH Touch and Picsart. Details, composition, visual identity.";
+        const introAR = "مرحباً، أنا حمزة طارق، 16 سنة. أنا مصمم جرافيك على هاتفي باستخدام PH Touch و Picsart. تفاصيل، تكوين، هوية بصرية.";
+
+        const aboutEN = "Egyptian, from Cairo. Still studying and graphic design is a hobby for me. I started a long time ago and kept improving day by day.";
+        const aboutAR = "مصري، من القاهرة. لا أزال أدرس والتصميم الجرافيكي هواية بالنسبة لي. لقد بدأت منذ وقت طويل وأستمر في التحسن يومًا بعد يوم.";
+
+        function escape(str) {
+            return str.replace(/[&<>]/g, m => m == '&' ? '&amp;' : m == '<' ? '&lt;' : '&gt;');
+        }
+
         setTimeout(() => {
-            document.querySelectorAll('.design-img').forEach(img => {
-                if(img.complete && !img.classList.contains('loaded')) img.classList.add('loaded');
+            let splash = document.getElementById('splash');
+            if(splash) {
+                splash.style.opacity = '0';
+                setTimeout(() => splash.remove(), 500);
+            }
+        }, 1500);
+
+        window.addEventListener('scroll', () => {
+            let winScroll = document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - window.innerHeight;
+            let percent = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = percent + '%';
+        });
+
+        function renderGallery() {
+            let container = document.getElementById('gallery');
+            container.innerHTML = '';
+            
+            let toShow = currentFilter === 'all' ? [...allDesigns] : allDesigns.filter(d => d.cat === currentFilter);
+            filteredList = [...toShow];
+            
+            toShow.forEach((item, idx) => {
+                let card = document.createElement('div');
+                card.className = 'design-card';
+                if(item.feat) card.classList.add('featured');
+                card.style.animationDelay = (idx * 0.08) + 's';
+                
+                let imgWrap = document.createElement('div');
+                imgWrap.className = 'img-wrapper';
+                
+                let img = document.createElement('img');
+                img.src = item.img;
+                img.alt = item[currentLang].title;
+                img.className = 'design-img';
+                img.loading = 'lazy';
+                img.onload = () => img.classList.add('loaded');
+                img.onerror = () => { img.src = 'https://placehold.co/1220x686/2a2a3a/ff3e6c?text=404'; img.classList.add('loaded'); };
+                if(img.complete) img.classList.add('loaded');
+                
+                imgWrap.appendChild(img);
+                imgWrap.onclick = (e) => { e.stopPropagation(); openLightbox(item); };
+                
+                let badge = document.createElement('div');
+                badge.className = 'category-pill';
+                badge.innerText = item.cat === 'cyber' ? '⚡ CYBER' : '🌀 FANTASY';
+                imgWrap.appendChild(badge);
+                
+                if(item.feat) {
+                    let star = document.createElement('div');
+                    star.className = 'featured-badge';
+                    star.innerHTML = '⭐ FEATURED';
+                    imgWrap.appendChild(star);
+                }
+                
+                let info = document.createElement('div');
+                info.className = 'card-info';
+                info.innerHTML = `
+                    <h3>${escape(item[currentLang].title)}</h3>
+                    <div class="tools-used">🛠️ ${item.tools}</div>
+                    <div class="click-hint">🔍 ${currentLang === 'en' ? 'Click for details' : 'اضغط للتفاصيل'}</div>
+                `;
+                info.onclick = (e) => { e.stopPropagation(); openModal(item[currentLang].title, item[currentLang].desc); };
+                
+                card.appendChild(imgWrap);
+                card.appendChild(info);
+                container.appendChild(card);
             });
-        }, 50);
-    }
-
-    function updateLanguageUI() {
-        if (typingInterval) clearTimeout(typingInterval);
-        const typedIntroEl = document.getElementById('typedIntro');
-        typedIntroEl.innerHTML = '';
-        const fullText = currentLanguage === 'en' ? fullIntroEn : fullIntroAr;
-        let i = 0;
-        function typeWriter() {
-            if (i < fullText.length) {
-                typedIntroEl.innerHTML += fullText.charAt(i);
-                i++;
-                typingInterval = setTimeout(typeWriter, 20);
+            
+            if(currentFilter === 'all') {
+                let soonCard = document.createElement('div');
+                soonCard.className = 'design-card coming-soon';
+                soonCard.style.animationDelay = (toShow.length * 0.08) + 's';
+                let wrap = document.createElement('div');
+                wrap.className = 'img-wrapper';
+                let placeholder = document.createElement('div');
+                placeholder.style.cssText = 'width:100%; aspect-ratio:1220/686; background:var(--placeholder); display:flex; align-items:center; justify-content:center; flex-direction:column; font-size:2rem;';
+                placeholder.innerHTML = '🌀<br><span style="font-size:0.8rem;">COMING SOON</span>';
+                wrap.appendChild(placeholder);
+                let infoSoon = document.createElement('div');
+                infoSoon.className = 'card-info';
+                infoSoon.innerHTML = `<h3>${comingSoon[currentLang].title}</h3><div class="tools-used">🛠️ ???</div><div class="click-hint">🔍 ${currentLang === 'en' ? 'Click' : 'اضغط'}</div>`;
+                infoSoon.onclick = () => openModal(comingSoon[currentLang].title, comingSoon[currentLang].desc);
+                soonCard.appendChild(wrap);
+                soonCard.appendChild(infoSoon);
+                container.appendChild(soonCard);
             }
         }
-        typeWriter();
+
+        function openModal(title, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('descModal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('descModal').style.display = 'none'; }
+
+        let lightboxElem = document.getElementById('lightboxModal');
+        let lbImage = document.getElementById('lbImage');
+        let lbCaption = document.getElementById('lbCaption');
+        let spinner = document.getElementById('lbSpinner');
         
-        document.getElementById('nameText').innerHTML = currentLanguage === 'en' ? 'Hamza Tarek' : 'حمزة طارق';
-        document.getElementById('tagText').innerHTML = currentLanguage === 'en' ? '16 y/o • Graphic Designer' : '١٦ سنة • مصمم جرافيك';
-        
-        document.querySelectorAll('.skill').forEach(skill => {
-            const enText = skill.getAttribute('data-skill-en');
-            const arText = skill.getAttribute('data-skill-ar');
-            skill.textContent = currentLanguage === 'en' ? enText : arText;
-        });
-        
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            const enText = btn.getAttribute('data-en');
-            const arText = btn.getAttribute('data-ar');
-            btn.textContent = currentLanguage === 'en' ? enText : arText;
-        });
-        
-        document.getElementById('galleryTitle').innerHTML = currentLanguage === 'en' ? 'My designs' : 'تصاميمي';
-        document.getElementById('footerText').innerHTML = currentLanguage === 'en' ? '© 2026 Hamza Tarek — Design that speaks' : '© ٢٠٢٦ حمزة طارق — تصميم يتحدث';
-        
-        const madeByDiv = document.getElementById('madeByText');
-        if (currentLanguage === 'en') {
-            madeByDiv.innerHTML = 'Made by <a href="https://www.instagram.com/mnx_io1?igsh=MW81Znlqc2RldGd5bQ==" target="_blank" rel="noopener noreferrer">Doma</a>';
-        } else {
-            madeByDiv.innerHTML = 'صنع بواسطة <a href="https://www.instagram.com/mnx_io1?igsh=MW81Znlqc2RldGd5bQ==" target="_blank" rel="noopener noreferrer">دوما</a>';
+        function openLightbox(design) {
+            let idx = filteredList.findIndex(d => d.id === design.id);
+            if(idx !== -1) {
+                lightboxIndex = idx;
+                updateLightbox();
+                lightboxElem.style.display = 'flex';
+            }
         }
         
-        document.getElementById('closeModalBtn').innerHTML = currentLanguage === 'en' ? 'Close' : 'إغلاق';
-        
-        if (currentLanguage === 'ar') {
-            document.body.classList.add('arabic');
-        } else {
-            document.body.classList.remove('arabic');
+        function updateLightbox() {
+            if(filteredList.length === 0) return;
+            let item = filteredList[lightboxIndex];
+            spinner.style.display = 'block';
+            lbImage.style.opacity = '0';
+            lbImage.classList.remove('loaded', 'zoomed');
+            zoomActive = false;
+            
+            let temp = new Image();
+            temp.src = item.img;
+            temp.onload = () => {
+                lbImage.src = item.img;
+                lbImage.classList.add('loaded');
+                spinner.style.display = 'none';
+                lbCaption.innerText = `${item[currentLang].title} • ${item.tools}`;
+            };
+            temp.onerror = () => {
+                lbImage.src = 'https://placehold.co/1220x686/2a2a3a/ff3e6c?text=404';
+                lbImage.classList.add('loaded');
+                spinner.style.display = 'none';
+                lbCaption.innerText = `${item[currentLang].title} • ${item.tools}`;
+            };
         }
         
-        document.getElementById('langToggle').innerHTML = currentLanguage === 'en' ? '🇸🇦 العربية' : '🇬🇧 English';
-        
-        renderGallery();
-    }
-
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentFilter = btn.dataset.filter;
-            const gallery = document.getElementById('designGallery');
-            gallery.style.opacity = '0';
-            setTimeout(() => {
-                renderGallery();
-                gallery.style.opacity = '1';
-            }, 200);
-        });
-    });
-
-    const descModal = document.getElementById('descModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    window.openDescModal = (title, desc) => {
-        modalTitle.textContent = title;
-        modalDesc.textContent = desc;
-        descModal.style.display = 'flex';
-    };
-    window.closeDescModal = () => { descModal.style.display = 'none'; };
-
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxCounter = document.getElementById('lightboxCounter');
-    const lightboxPrev = document.getElementById('lightboxPrev');
-    const lightboxNext = document.getElementById('lightboxNext');
-    
-    function updateLightbox() {
-        if (filteredDesigns.length === 0) return;
-        const design = filteredDesigns[currentLightboxIndex];
-        lightboxImg.src = design.image;
-        lightboxCounter.textContent = `${currentLightboxIndex+1} / ${filteredDesigns.length}`;
-    }
-    function openLightboxByDesign(design) {
-        const index = filteredDesigns.findIndex(d => d.id === design.id);
-        if (index !== -1) {
-            currentLightboxIndex = index;
+        function nextImage() {
+            if(filteredList.length === 0) return;
+            lightboxIndex = (lightboxIndex + 1) % filteredList.length;
             updateLightbox();
-            lightbox.style.display = 'flex';
         }
-    }
-    window.closeLightbox = () => { lightbox.style.display = 'none'; };
-    lightboxPrev.addEventListener('click', () => {
-        if (filteredDesigns.length === 0) return;
-        currentLightboxIndex = (currentLightboxIndex - 1 + filteredDesigns.length) % filteredDesigns.length;
-        updateLightbox();
-    });
-    lightboxNext.addEventListener('click', () => {
-        if (filteredDesigns.length === 0) return;
-        currentLightboxIndex = (currentLightboxIndex + 1) % filteredDesigns.length;
-        updateLightbox();
-    });
-    
-    let touchStartX = 0;
-    lightbox.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
-    lightbox.addEventListener('touchend', (e) => {
-        if (!lightbox.style.display === 'flex') return;
-        const endX = e.changedTouches[0].clientX;
-        const diff = endX - touchStartX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) lightboxPrev.click();
-            else lightboxNext.click();
+        function prevImage() {
+            if(filteredList.length === 0) return;
+            lightboxIndex = (lightboxIndex - 1 + filteredList.length) % filteredList.length;
+            updateLightbox();
         }
-    });
-    
-    document.addEventListener('keydown', (e) => {
-        if (lightbox.style.display === 'flex') {
-            if (e.key === 'ArrowLeft') lightboxPrev.click();
-            else if (e.key === 'ArrowRight') lightboxNext.click();
-            else if (e.key === 'Escape') closeLightbox();
-        } else if (e.key === 'Escape') {
-            closeDescModal();
-        }
-    });
-    descModal.addEventListener('click', (e) => { if(e.target === descModal) closeDescModal(); });
-    lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
-
-    const langToggle = document.getElementById('langToggle');
-    langToggle.addEventListener('click', () => {
-        currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
-        localStorage.setItem('hamzaLanguage', currentLanguage);
-        updateLanguageUI();
-    });
-
-    const themeToggle = document.getElementById('themeToggle');
-    function setTheme(theme) {
-        if (theme === 'dark') {
-            document.body.classList.add('dark');
-            themeToggle.innerHTML = '🌙 Dark';
-        } else {
-            document.body.classList.remove('dark');
-            themeToggle.innerHTML = '☀️ Light';
-        }
-        localStorage.setItem('hamzaTheme', theme);
-    }
-    const savedTheme = localStorage.getItem('hamzaTheme');
-    setTheme(savedTheme === 'dark' ? 'dark' : 'light');
-    themeToggle.addEventListener('click', () => {
-        const isDark = document.body.classList.contains('dark');
-        setTheme(isDark ? 'light' : 'dark');
-    });
-
-    const backBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) backBtn.classList.add('show');
-        else backBtn.classList.remove('show');
-    });
-    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    const revealElements = document.querySelectorAll('.scroll-reveal');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                observer.unobserve(entry.target);
+        function closeLightbox() { lightboxElem.style.display = 'none'; }
+        
+        lbImage.onclick = () => {
+            if(window.innerWidth <= 700) return;
+            if(zoomActive) {
+                lbImage.classList.remove('zoomed');
+                zoomActive = false;
+            } else {
+                lbImage.classList.add('zoomed');
+                zoomActive = true;
             }
-        });
-    }, { threshold: 0.1 });
-    revealElements.forEach(el => observer.observe(el));
+        };
 
-    if (savedTheme === 'dark') document.body.classList.add('dark');
-    if (currentLanguage === 'ar') document.body.classList.add('arabic');
-    updateLanguageUI();
-</script>
+        function updateLanguage() {
+            document.documentElement.lang = currentLang === 'en' ? 'en' : 'ar';
+            
+            let bioEl = document.getElementById('bioText');
+            bioEl.innerHTML = '';
+            let fullBio = currentLang === 'en' ? introEN : introAR;
+            let idx = 0;
+            function typeNext() {
+                if(idx < fullBio.length) {
+                    bioEl.innerHTML += fullBio.charAt(idx);
+                    idx++;
+                    setTimeout(typeNext, 18);
+                }
+            }
+            typeNext();
+            
+            document.getElementById('name').innerHTML = currentLang === 'en' ? 'Hamza Tarek' : 'حمزة طارق';
+            document.getElementById('ageTag').innerHTML = currentLang === 'en' ? '16 y/o • Designer' : '١٦ سنة • مصمم';
+            document.getElementById('aboutTitle').innerHTML = currentLang === 'en' ? '📖 About me' : '📖 عني';
+            document.getElementById('location').innerHTML = currentLang === 'en' ? '🇪🇬 Egypt • Cairo' : '🇪🇬 مصر • القاهرة';
+            document.getElementById('aboutDesc').innerHTML = currentLang === 'en' ? aboutEN : aboutAR;
+            
+            document.getElementById('tool1').innerHTML = currentLang === 'en' ? 'Photo manipulation' : 'معالجة الصور';
+            document.getElementById('tool2').innerHTML = currentLang === 'en' ? 'Editing & effects' : 'تحرير وتأثيرات';
+            
+            document.getElementById('galleryTitle').innerHTML = currentLang === 'en' ? '⚡ My designs' : '⚡ تصاميمي';
+            document.getElementById('contactTitle').innerHTML = currentLang === 'en' ? '📬 Wanna collab?' : '📬 تتعاون؟';
+            document.getElementById('contactText').innerHTML = currentLang === 'en' ? 'DM me on Instagram for commissions' : 'راسلني على انستغرام للطلبات';
+            document.getElementById('dmLabel').innerHTML = currentLang === 'en' ? 'DM me' : 'راسلني';
+            document.getElementById('footerText').innerHTML = currentLang === 'en' ? '© 2026 Hamza Tarek' : '© ٢٠٢٦ حمزة طارق';
+            
+            let credit = document.getElementById('creditLine');
+            credit.innerHTML = currentLang === 'en' 
+                ? 'Made by <a href="https://www.instagram.com/mnx_io1" target="_blank" style="color: var(--accent);">Doma</a>'
+                : 'صنع بواسطة <a href="https://www.instagram.com/mnx_io1" target="_blank" style="color: var(--accent);">دوما</a>';
+            
+            document.querySelectorAll('.skill').forEach(s => {
+                let enT = s.getAttribute('data-en');
+                let arT = s.getAttribute('data-ar');
+                s.innerText = currentLang === 'en' ? enT : arT;
+            });
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                let enT = btn.getAttribute('data-en');
+                let arT = btn.getAttribute('data-ar');
+                if(enT && arT) btn.innerText = currentLang === 'en' ? enT : arT;
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                let enT = link.getAttribute('data-en');
+                let arT = link.getAttribute('data-ar');
+                if(enT && arT) link.innerText = currentLang === 'en' ? enT : arT;
+            });
+            
+            document.getElementById('closeModalBtn').innerHTML = currentLang === 'en' ? 'Close' : 'إغلاق';
+            document.getElementById('langBtn').innerHTML = currentLang === 'en' ? '🇸🇦 العربية' : '🇬🇧 English';
+            
+            if(currentLang === 'ar') document.body.classList.add('arabic');
+            else document.body.classList.remove('arabic');
+            
+            renderGallery();
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                let gal = document.getElementById('gallery');
+                gal.style.opacity = '0';
+                setTimeout(() => {
+                    renderGallery();
+                    gal.style.opacity = '1';
+                }, 120);
+            });
+        });
+
+        document.getElementById('closeModalBtn').onclick = closeModal;
+        document.getElementById('descModal').onclick = (e) => { if(e.target === document.getElementById('descModal')) closeModal(); };
+        document.getElementById('lbClose').onclick = closeLightbox;
+        document.getElementById('lbPrev').onclick = prevImage;
+        document.getElementById('lbNext').onclick = nextImage;
+        document.getElementById('lightboxModal').onclick = (e) => { if(e.target === document.getElementById('lightboxModal')) closeLightbox(); };
+        
+        document.addEventListener('keydown', (e) => {
+            if(lightboxElem.style.display === 'flex') {
+                if(e.key === 'ArrowLeft') prevImage();
+                else if(e.key === 'ArrowRight') nextImage();
+                else if(e.key === 'Escape') closeLightbox();
+            } else if(e.key === 'Escape') closeModal();
+        });
+
+        document.getElementById('langBtn').onclick = () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            localStorage.setItem('lang', currentLang);
+            updateLanguage();
+        };
+
+        const themeBtn = document.getElementById('themeBtn');
+        function setTheme(theme) {
+            if(theme === 'light') {
+                document.body.classList.remove('dark');
+                document.body.classList.add('light');
+                themeBtn.innerHTML = '☀️ Light';
+            } else {
+                document.body.classList.remove('light');
+                document.body.classList.add('dark');
+                themeBtn.innerHTML = '🌙 Dark';
+            }
+            localStorage.setItem('theme', theme);
+        }
+        let savedTheme = localStorage.getItem('theme');
+        setTheme(savedTheme === 'light' ? 'light' : 'dark');
+        themeBtn.onclick = () => {
+            let isDark = document.body.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        };
+
+        let topBtn = document.getElementById('topBtn');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 250) topBtn.classList.add('show');
+            else topBtn.classList.remove('show');
+            
+            let sections = ['home', 'about', 'work', 'contact'];
+            let current = '';
+            for(let s of sections) {
+                let el = document.getElementById(s);
+                if(el) {
+                    let rect = el.getBoundingClientRect();
+                    if(rect.top <= 100 && rect.bottom >= 100) { current = s; break; }
+                }
+            }
+            document.querySelectorAll('.nav-link').forEach(link => {
+                let href = link.getAttribute('href').substring(1);
+                if(href === current) link.classList.add('active');
+                else link.classList.remove('active');
+            });
+        });
+        topBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                let target = document.getElementById(link.getAttribute('href').substring(1));
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        let reveals = document.querySelectorAll('.reveal');
+        let obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        reveals.forEach(r => obs.observe(r));
+
+        updateLanguage();
+    </script>
 </body>
 </html>
